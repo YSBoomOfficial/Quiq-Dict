@@ -9,27 +9,39 @@
 /* Begin PBXBuildFile section */
 		D3226B232898B0F100DA964A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B222898B0F100DA964A /* AppDelegate.swift */; };
 		D3226B252898B0F100DA964A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B242898B0F100DA964A /* SceneDelegate.swift */; };
-		D3226B272898B0F100DA964A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B262898B0F100DA964A /* ViewController.swift */; };
+		D3226B272898B0F100DA964A /* WordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B262898B0F100DA964A /* WordListViewController.swift */; };
 		D3226B2C2898B0F300DA964A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3226B2B2898B0F300DA964A /* Assets.xcassets */; };
 		D3226B2F2898B0F300DA964A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3226B2D2898B0F300DA964A /* LaunchScreen.storyboard */; };
 		D3226B372898B16D00DA964A /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B362898B16D00DA964A /* Word.swift */; };
 		D3226B3A2898B42600DA964A /* DispatchQueue+mainAsyncIfNeeded.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B392898B42600DA964A /* DispatchQueue+mainAsyncIfNeeded.swift */; };
 		D3226B3D2898B44600DA964A /* UIViewController+ShowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */; };
-		D3226B3F2898B73600DA964A /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B3E2898B73600DA964A /* APIService.swift */; };
+		D3226B3F2898B73600DA964A /* WordAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B3E2898B73600DA964A /* WordAPI.swift */; };
+		D34EBDA928995E5200B41361 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDA828995E5200B41361 /* APIError.swift */; };
+		D34EBDAD28995EA700B41361 /* WordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDAC28995EA700B41361 /* WordViewModel.swift */; };
+		D34EBDB02899617C00B41361 /* WordsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDAF2899617C00B41361 /* WordsService.swift */; };
+		D34EBDB2289962DD00B41361 /* WordAPIWordsServiceAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDB1289962DD00B41361 /* WordAPIWordsServiceAdapter.swift */; };
+		D34EBDB52899640600B41361 /* WordsServiceWithFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDB42899640600B41361 /* WordsServiceWithFallback.swift */; };
+		D3892E702899F2F000F35B14 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3892E6F2899F2F000F35B14 /* WordCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D3226B1F2898B0F100DA964A /* Quiq Dict.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quiq Dict.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3226B222898B0F100DA964A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3226B242898B0F100DA964A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D3226B262898B0F100DA964A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D3226B262898B0F100DA964A /* WordListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListViewController.swift; sourceTree = "<group>"; };
 		D3226B2B2898B0F300DA964A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3226B2E2898B0F300DA964A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3226B302898B0F300DA964A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3226B362898B16D00DA964A /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		D3226B392898B42600DA964A /* DispatchQueue+mainAsyncIfNeeded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+mainAsyncIfNeeded.swift"; sourceTree = "<group>"; };
 		D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ShowError.swift"; sourceTree = "<group>"; };
-		D3226B3E2898B73600DA964A /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		D3226B3E2898B73600DA964A /* WordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAPI.swift; sourceTree = "<group>"; };
+		D34EBDA828995E5200B41361 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		D34EBDAC28995EA700B41361 /* WordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordViewModel.swift; sourceTree = "<group>"; };
+		D34EBDAF2899617C00B41361 /* WordsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsService.swift; sourceTree = "<group>"; };
+		D34EBDB1289962DD00B41361 /* WordAPIWordsServiceAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAPIWordsServiceAdapter.swift; sourceTree = "<group>"; };
+		D34EBDB42899640600B41361 /* WordsServiceWithFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsServiceWithFallback.swift; sourceTree = "<group>"; };
+		D3892E6F2899F2F000F35B14 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +78,10 @@
 				D3226B242898B0F100DA964A /* SceneDelegate.swift */,
 				D3226B3B2898B42A00DA964A /* Utils */,
 				D3226B382898B18400DA964A /* Models */,
-				D3226B262898B0F100DA964A /* ViewController.swift */,
-				D3226B3E2898B73600DA964A /* APIService.swift */,
+				D34EBDAE28995FE900B41361 /* ViewModels */,
+				D3892E712899F2FA00F35B14 /* Views */,
+				D3892E6E2899F2DE00F35B14 /* ViewControllers */,
+				D34EBDA728995D2700B41361 /* Networking */,
 				D3226B2B2898B0F300DA964A /* Assets.xcassets */,
 				D3226B2D2898B0F300DA964A /* LaunchScreen.storyboard */,
 				D3226B302898B0F300DA964A /* Info.plist */,
@@ -90,6 +104,58 @@
 				D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		D34EBDA728995D2700B41361 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D34EBDB3289963EA00B41361 /* WordsService */,
+				D34EBDA828995E5200B41361 /* APIError.swift */,
+				D34EBDB62899696E00B41361 /* WordAPI */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		D34EBDAE28995FE900B41361 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D34EBDAC28995EA700B41361 /* WordViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D34EBDB3289963EA00B41361 /* WordsService */ = {
+			isa = PBXGroup;
+			children = (
+				D34EBDAF2899617C00B41361 /* WordsService.swift */,
+				D34EBDB42899640600B41361 /* WordsServiceWithFallback.swift */,
+			);
+			path = WordsService;
+			sourceTree = "<group>";
+		};
+		D34EBDB62899696E00B41361 /* WordAPI */ = {
+			isa = PBXGroup;
+			children = (
+				D3226B3E2898B73600DA964A /* WordAPI.swift */,
+				D34EBDB1289962DD00B41361 /* WordAPIWordsServiceAdapter.swift */,
+			);
+			path = WordAPI;
+			sourceTree = "<group>";
+		};
+		D3892E6E2899F2DE00F35B14 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D3226B262898B0F100DA964A /* WordListViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D3892E712899F2FA00F35B14 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D3892E6F2899F2F000F35B14 /* WordCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,12 +229,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3226B3D2898B44600DA964A /* UIViewController+ShowError.swift in Sources */,
-				D3226B3F2898B73600DA964A /* APIService.swift in Sources */,
-				D3226B272898B0F100DA964A /* ViewController.swift in Sources */,
+				D3226B3F2898B73600DA964A /* WordAPI.swift in Sources */,
+				D34EBDB2289962DD00B41361 /* WordAPIWordsServiceAdapter.swift in Sources */,
+				D3226B272898B0F100DA964A /* WordListViewController.swift in Sources */,
 				D3226B372898B16D00DA964A /* Word.swift in Sources */,
+				D34EBDB52899640600B41361 /* WordsServiceWithFallback.swift in Sources */,
 				D3226B232898B0F100DA964A /* AppDelegate.swift in Sources */,
+				D34EBDAD28995EA700B41361 /* WordViewModel.swift in Sources */,
+				D34EBDB02899617C00B41361 /* WordsService.swift in Sources */,
+				D34EBDA928995E5200B41361 /* APIError.swift in Sources */,
 				D3226B252898B0F100DA964A /* SceneDelegate.swift in Sources */,
 				D3226B3A2898B42600DA964A /* DispatchQueue+mainAsyncIfNeeded.swift in Sources */,
+				D3892E702899F2F000F35B14 /* WordCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +308,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -289,6 +362,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

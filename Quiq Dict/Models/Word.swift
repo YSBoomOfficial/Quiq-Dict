@@ -34,7 +34,8 @@ struct Word: Codable {
 		// MARK: Word.Meaning.Definition
 		struct Definition: Codable {
 			let definition: String
-			let synonyms, antonyms: [String]
+			let synonyms: [String]
+			let antonyms: [String]
 			let example: String?
 		}
 	}
