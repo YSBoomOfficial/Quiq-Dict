@@ -20,8 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	private func makeWordListViewController() -> WordListViewController {
-		let vc = WordListViewController()
-		vc.service = WordAPIWordsServiceAdapter(api: .shared)
+		let vc = WordListViewController(service: WordAPIWordsServiceAdapter(api: .shared))
 		return vc
 	}
 

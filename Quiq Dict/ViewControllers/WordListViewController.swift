@@ -12,13 +12,20 @@ class WordListViewController: UIViewController {
 	private let searchController = UISearchController(searchResultsController: nil)
 	private let tableView = UITableView(frame: .zero, style: .insetGrouped)
 
-	private(set) var wordViewModels = [WordViewModel]()
+	private var wordViewModels = [WordViewModel]()
+	private var service: WordsService?
+	private var searchTerm = ""
 
-	var service: WordsService?
+	init(service: WordsService) {
+		self.service = service
+		super.init(nibName: nil, bundle: nil)
+	}
 
-	private(set) var searchTerm = ""
+	required init?(coder: NSCoder) {
+		fatalError("init?(coder: NSCoder) has not been implemented")
+	}
 
-	var cancellable = [AnyCancellable]()
+	var cancellable = Set<AnyCancellable>()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -57,7 +64,7 @@ extension WordListViewController {
 		searchController.searchBar.translatesAutoresizingMaskIntoConstraints = false
 		searchController.searchBar.placeholder = "Search for a word..."
 		searchController.obscuresBackgroundDuringPresentation = false
-		//		searchController.searchBar.delegate = self
+		searchController.searchBar.delegate = self
 		searchController.searchBar.keyboardType = .default
 
 		navigationController?.navigationBar.barTintColor = .systemBackground
@@ -124,4 +131,8 @@ extension WordListViewController {
 		}
 		.store(in: &cancellable)
 	}
+}
+
+extension WordListViewController: UISearchBarDelegate {
+
 }
