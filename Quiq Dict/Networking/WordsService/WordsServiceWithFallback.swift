@@ -12,7 +12,7 @@ struct ItemServiceWithFallback: WordsService {
 	let primary: WordsService
 	let fallback: WordsService
 
-	func loadDefinitions(for word: String, completion: @escaping (Result<[WordViewModel], Error>) -> Void) {
+	func loadDefinitions(for word: String, completion: @escaping (Result<[WordViewModel], NetworkError>) -> Void) {
 		primary.loadDefinitions(for: word) { result in
 			switch result {
 				case .success: completion(result)

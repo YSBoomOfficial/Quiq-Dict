@@ -16,7 +16,7 @@
 		D3226B3A2898B42600DA964A /* DispatchQueue+mainAsyncIfNeeded.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B392898B42600DA964A /* DispatchQueue+mainAsyncIfNeeded.swift */; };
 		D3226B3D2898B44600DA964A /* UIViewController+ShowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */; };
 		D3226B3F2898B73600DA964A /* WordAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B3E2898B73600DA964A /* WordAPI.swift */; };
-		D34EBDA928995E5200B41361 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDA828995E5200B41361 /* APIError.swift */; };
+		D34EBDA928995E5200B41361 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDA828995E5200B41361 /* NetworkError.swift */; };
 		D34EBDAD28995EA700B41361 /* WordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDAC28995EA700B41361 /* WordViewModel.swift */; };
 		D34EBDB02899617C00B41361 /* WordsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDAF2899617C00B41361 /* WordsService.swift */; };
 		D34EBDB2289962DD00B41361 /* WordAPIWordsServiceAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDB1289962DD00B41361 /* WordAPIWordsServiceAdapter.swift */; };
@@ -36,7 +36,7 @@
 		D3226B392898B42600DA964A /* DispatchQueue+mainAsyncIfNeeded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+mainAsyncIfNeeded.swift"; sourceTree = "<group>"; };
 		D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ShowError.swift"; sourceTree = "<group>"; };
 		D3226B3E2898B73600DA964A /* WordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAPI.swift; sourceTree = "<group>"; };
-		D34EBDA828995E5200B41361 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		D34EBDA828995E5200B41361 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D34EBDAC28995EA700B41361 /* WordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordViewModel.swift; sourceTree = "<group>"; };
 		D34EBDAF2899617C00B41361 /* WordsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsService.swift; sourceTree = "<group>"; };
 		D34EBDB1289962DD00B41361 /* WordAPIWordsServiceAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAPIWordsServiceAdapter.swift; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				D34EBDB3289963EA00B41361 /* WordsService */,
-				D34EBDA828995E5200B41361 /* APIError.swift */,
+				D34EBDA828995E5200B41361 /* NetworkError.swift */,
 				D34EBDB62899696E00B41361 /* WordAPI */,
 			);
 			path = Networking;
@@ -237,7 +237,7 @@
 				D3226B232898B0F100DA964A /* AppDelegate.swift in Sources */,
 				D34EBDAD28995EA700B41361 /* WordViewModel.swift in Sources */,
 				D34EBDB02899617C00B41361 /* WordsService.swift in Sources */,
-				D34EBDA928995E5200B41361 /* APIError.swift in Sources */,
+				D34EBDA928995E5200B41361 /* NetworkError.swift in Sources */,
 				D3226B252898B0F100DA964A /* SceneDelegate.swift in Sources */,
 				D3226B3A2898B42600DA964A /* DispatchQueue+mainAsyncIfNeeded.swift in Sources */,
 				D3892E702899F2F000F35B14 /* WordCell.swift in Sources */,

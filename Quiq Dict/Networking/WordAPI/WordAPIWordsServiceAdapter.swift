@@ -11,7 +11,7 @@ import UIKit
 struct WordAPIWordsServiceAdapter: WordsService {
 	let api: WordAPI
 
-	func loadDefinitions(for word: String, completion: @escaping (Result<[WordViewModel], Error>) -> Void) {
+	func loadDefinitions(for word: String, completion: @escaping (Result<[WordViewModel], NetworkError>) -> Void) {
 		api.fetchDefinitions(for: word) { result in
 			switch result {
 				case .success(let words):

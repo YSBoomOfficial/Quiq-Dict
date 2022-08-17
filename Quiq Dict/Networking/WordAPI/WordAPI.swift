@@ -18,43 +18,31 @@ final class WordAPI {
 		return config
 	}
 
-	func fetchDefinitions(for word: String, completion: @escaping (Result<[Word], Error>) -> Void) {
+	func fetchDefinitions(for word: String, completion: @escaping (Result<[Word], NetworkError>) -> Void) {
 		guard let url = URL(string: "https://api.dictionaryapi.dev/api/v2/entries/en/\(word.lowercased())") else {
-			completion(.failure(APIError.badURL))
-			print("\n\n\n")
-			print("badURL")
-			return
+			completion(.failure(.badURL))
+			print("\n\n\n badURL \n\n\n"); return
 		}
 
 		URLSession(configuration: sessionConfig).dataTask(with: url) { data, response, error in
 			guard let status = (response as? HTTPURLResponse), 200...299 ~= status.statusCode else {
-				completion(.failure(APIError.badResponse((response as? HTTPURLResponse)?.statusCode ?? -1)))
-				print("\n\n\n")
-				print("badResponse")
-				return
+				completion(.failure(.badResponse((response as? HTTPURLResponse)?.statusCode ?? -1)))
+				print("\n\n\n badResponse \((response as? HTTPURLResponse)?.statusCode ?? -1) \n\n\n "); return
 			}
 
 			if let error = error {
-				completion(.failure(error))
-				print("\n\n\n")
-				print("boo error \(error.localizedDescription)")
-				print("boo error \(error)")
-				return
+				completion(.failure(.other(error)))
+				print("\n\n\n boo error \(error) - \(error.localizedDescription) \n\n\n"); return
 			}
 
 			if let data = data {
 				do {
 					let decoded = try JSONDecoder().decode([Word].self, from: data)
 					completion(.success(decoded))
-					print("\n\n\n")
-					print("yay data")
-					return
+					print("\n\n\n yay data \n\n\n"); return
 				} catch {
-					completion(.failure(error))
-					print("\n\n\n")
-					print("boo error \(error.localizedDescription)")
-					print("boo error \(error)")
-					return
+					completion(.failure(.decodingError))
+					print("\n\n\n boo error \(error) - \(error.localizedDescription) \n\n\n"); return
 				}
 			}
 		}.resume()

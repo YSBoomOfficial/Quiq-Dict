@@ -87,7 +87,7 @@ extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: Actions
 extension WordListViewController {
-	private func handleAPIResult(_ result: Result<[WordViewModel], Error>) {
+	private func handleAPIResult(_ result: Result<[WordViewModel], NetworkError>) {
 		DispatchQueue.mainAsyncIfNeeded { [weak self] in
 			self?.tableView.refreshControl?.endRefreshing()
 			switch result {
@@ -95,7 +95,7 @@ extension WordListViewController {
 					self?.wordViewModels = wordVMs
 					self?.tableView.reloadSections(.init(integer: 0), with: .automatic)
 				case .failure(let error):
-					self?.show(error: error)
+					self?.showAlert(withError: error)
 			}
 		}
 	}

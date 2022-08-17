@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: WordsService Protocol
 protocol WordsService {
-	func loadDefinitions(for word: String, completion: @escaping (Result<[WordViewModel], Error>) -> Void)
+	func loadDefinitions(for word: String, completion: @escaping (Result<[WordViewModel], NetworkError>) -> Void)
 }
 
 // MARK: WordsService Fallback
