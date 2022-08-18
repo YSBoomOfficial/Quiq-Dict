@@ -20,7 +20,6 @@
 		D34EBDAD28995EA700B41361 /* WordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDAC28995EA700B41361 /* WordViewModel.swift */; };
 		D34EBDB02899617C00B41361 /* WordsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDAF2899617C00B41361 /* WordsService.swift */; };
 		D34EBDB2289962DD00B41361 /* WordAPIWordsServiceAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDB1289962DD00B41361 /* WordAPIWordsServiceAdapter.swift */; };
-		D34EBDB52899640600B41361 /* WordsServiceWithFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDB42899640600B41361 /* WordsServiceWithFallback.swift */; };
 		D3892E702899F2F000F35B14 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3892E6F2899F2F000F35B14 /* WordCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +39,6 @@
 		D34EBDAC28995EA700B41361 /* WordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordViewModel.swift; sourceTree = "<group>"; };
 		D34EBDAF2899617C00B41361 /* WordsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsService.swift; sourceTree = "<group>"; };
 		D34EBDB1289962DD00B41361 /* WordAPIWordsServiceAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAPIWordsServiceAdapter.swift; sourceTree = "<group>"; };
-		D34EBDB42899640600B41361 /* WordsServiceWithFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsServiceWithFallback.swift; sourceTree = "<group>"; };
 		D3892E6F2899F2F000F35B14 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,7 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				D34EBDAF2899617C00B41361 /* WordsService.swift */,
-				D34EBDB42899640600B41361 /* WordsServiceWithFallback.swift */,
 			);
 			path = WordsService;
 			sourceTree = "<group>";
@@ -233,7 +230,6 @@
 				D34EBDB2289962DD00B41361 /* WordAPIWordsServiceAdapter.swift in Sources */,
 				D3226B272898B0F100DA964A /* WordListViewController.swift in Sources */,
 				D3226B372898B16D00DA964A /* Word.swift in Sources */,
-				D34EBDB52899640600B41361 /* WordsServiceWithFallback.swift in Sources */,
 				D3226B232898B0F100DA964A /* AppDelegate.swift in Sources */,
 				D34EBDAD28995EA700B41361 /* WordViewModel.swift in Sources */,
 				D34EBDB02899617C00B41361 /* WordsService.swift in Sources */,

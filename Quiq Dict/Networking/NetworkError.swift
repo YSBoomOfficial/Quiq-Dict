@@ -16,7 +16,8 @@ enum NetworkError: Error, CustomStringConvertible {
 	var description: String {
 		switch self {
 			case .badURL: return "The word you entered doesn't seem to exist."
-			case .badResponse(let response): return "There is something wrong with the server. Response Code \(response)"
+			case .badResponse(let response):
+				return response == 404 ? "The word you entered doesn't seem to exist." : "There is something wrong with the server. Response Code \(response)"
 			case .decodingError: return "The Server's response couldn't be decoded correctly"
 			case .other(let error):  return "Something went wrong. \(error.localizedDescription)"
 		}
