@@ -15,15 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window?.windowScene = windowScene
-		window?.rootViewController = UINavigationController(rootViewController: makeWordListViewController())
+		window?.rootViewController = UINavigationController(rootViewController: WordListViewController(service: WordAPI.shared))
 		window?.makeKeyAndVisible()
 	}
-
-	private func makeWordListViewController() -> WordListViewController {
-		let vc = WordListViewController(service: WordAPIWordsServiceAdapter(api: .shared))
-		return vc
-	}
-
 
 	func sceneDidDisconnect(_ scene: UIScene) {
 		// Called as the scene is being released by the system.

@@ -7,10 +7,10 @@
 
 import Foundation
 
-// https://dictionaryapi.dev/
-// https://api.dictionaryapi.dev/api/v2/entries/en/<word>
+// Docs - https://dictionaryapi.dev/
+// Endpoint - https://api.dictionaryapi.dev/api/v2/entries/en/<word>
 
-final class WordAPI {
+final class WordAPI: WordsService {
 	static let shared = WordAPI()
 
 	var sessionConfig: URLSessionConfiguration {
@@ -20,29 +20,24 @@ final class WordAPI {
 
 	func fetchDefinitions(for word: String, completion: @escaping (Result<[Word], NetworkError>) -> Void) {
 		guard let url = URL(string: "https://api.dictionaryapi.dev/api/v2/entries/en/\(word.lowercased())") else {
-			completion(.failure(.badURL))
-			print("\n\n\n badURL \n\n\n"); return
+			completion(.failure(.badURL)); return
 		}
 
 		URLSession(configuration: sessionConfig).dataTask(with: url) { data, response, error in
 			guard let status = (response as? HTTPURLResponse), 200...299 ~= status.statusCode else {
-				completion(.failure(.badResponse((response as? HTTPURLResponse)?.statusCode ?? -1)))
-				print("\n\n\n badResponse \((response as? HTTPURLResponse)?.statusCode ?? -1) \n\n\n "); return
+				completion(.failure(.badResponse((response as? HTTPURLResponse)?.statusCode ?? -1))); return
 			}
 
 			if let error = error {
-				completion(.failure(.other(error)))
-				print("\n\n\n boo error \(error) - \(error.localizedDescription) \n\n\n"); return
+				completion(.failure(.other(error))); return
 			}
 
 			if let data = data {
 				do {
 					let decoded = try JSONDecoder().decode([Word].self, from: data)
-					completion(.success(decoded))
-					print("\n\n\n yay data \n\n\n"); return
+					completion(.success(decoded)); return
 				} catch {
-					completion(.failure(.decodingError))
-					print("\n\n\n boo error \(error) - \(error.localizedDescription) \n\n\n"); return
+					completion(.failure(.decodingError)); return
 				}
 			}
 		}.resume()

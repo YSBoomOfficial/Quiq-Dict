@@ -40,9 +40,30 @@ struct Word: Codable {
 		}
 	}
 
-	// MARK: License
+	// MARK: Word.License
 	struct License: Codable {
 		let name: String
 		let url: String
+	}
+
+	var title: String {
+		word.capitalized
+	}
+
+	var firstMeaning: String {
+		guard !meanings.isEmpty,
+			  let meaning = meanings.first(where: { !$0.definitions.isEmpty }),
+			  !meaning.definitions.isEmpty,
+			  let definition = meaning.definitions.first(where: { $0.definition != "" })?.definition else { return "No Definition found" }
+		return definition
+	}
+
+	var phoneticText: String {
+		if let phonetic = phonetic {
+			return phonetic
+		} else {
+			guard let phon = phonetics.first(where: { $0.text != nil }) else { return "" }
+			return phon.text!
+		}
 	}
 }

@@ -7,11 +7,8 @@
 
 import UIKit
 
-// TODO: Add UI for WordCell
-#warning("Add UI for WordCell")
 class WordCell: UITableViewCell {
 	static let reuseID = "WordCell"
-	var viewModel: WordViewModel?
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -21,9 +18,27 @@ class WordCell: UITableViewCell {
 		fatalError("init?(coder: NSCoder) has not been implemented")
 	}
 
-	func configure(with vm: WordViewModel) {
-		textLabel?.text = vm.title
-		detailTextLabel?.text = vm.subtitle
+	private func makeAttributedString(title: String, phonetics: String) -> NSAttributedString {
+		let titleAttributes = [
+			NSAttributedString.Key.foregroundColor: UIColor.label
+		]
+
+		let subtitleAttributes = [
+			NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+		]
+
+		let titleString = NSMutableAttributedString(string: "\(title) ", attributes: titleAttributes)
+		let subtitleString = NSAttributedString(string: phonetics, attributes: subtitleAttributes)
+
+		titleString.append(subtitleString)
+
+		return titleString
+	}
+
+	func configure(with word: Word) {
+		textLabel?.attributedText = makeAttributedString(title: word.title, phonetics: word.phoneticText)
+		detailTextLabel?.text = word.firstMeaning
+		detailTextLabel?.numberOfLines = 0
 	}
 
 }

@@ -12,9 +12,11 @@ class WordListViewController: UIViewController {
 	private let searchController = UISearchController(searchResultsController: nil)
 	private let tableView = UITableView(frame: .zero, style: .insetGrouped)
 
-	private var wordViewModels = [WordViewModel]()
 	private var service: WordsService?
+	private var words = [Word]()
+
 	private var searchTerm = ""
+	private var cancellable = Set<AnyCancellable>()
 
 	init(service: WordsService) {
 		self.service = service
@@ -25,8 +27,6 @@ class WordListViewController: UIViewController {
 		fatalError("init?(coder: NSCoder) has not been implemented")
 	}
 
-	var cancellable = Set<AnyCancellable>()
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -34,9 +34,10 @@ class WordListViewController: UIViewController {
 		navigationController?.navigationBar.prefersLargeTitles = true
 		title = "Quiq Dict"
 
+		navigationItem.leftBarButtonItem = .init(title: "Clear", style: .done, target: self, action: #selector(clearTapped))
+
 		setupTableView()
 		setupSearchController()
-		debounceSearchBarTextField()
 	}
 }
 
@@ -64,42 +65,44 @@ extension WordListViewController {
 		searchController.searchBar.translatesAutoresizingMaskIntoConstraints = false
 		searchController.searchBar.placeholder = "Search for a word..."
 		searchController.obscuresBackgroundDuringPresentation = false
-		searchController.searchBar.delegate = self
 		searchController.searchBar.keyboardType = .default
 
 		navigationController?.navigationBar.barTintColor = .systemBackground
 		navigationItem.searchController = searchController
 		navigationItem.hidesSearchBarWhenScrolling = true
+
+		debounceSearchBarTextField()
 	}
 }
 
 // MARK: UITableViewControllerDataSource & UITableViewControllerDelegate
 extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		wordViewModels.count
+		words.count
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: WordCell.reuseID, for: indexPath) as? WordCell else {
-			fatalError("cast to WordCell failed")
+			fatalError("Could not dequeue WordCell")
 		}
-		cell.configure(with: wordViewModels[indexPath.row])
+		cell.configure(with: words[indexPath.row])
 		return cell
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: false)
+		tableView.deselectRow(at: indexPath, animated: true)
+		show(WordDetailViewController(word: words[indexPath.row]), sender: self)
 	}
 }
 
 // MARK: Actions
 extension WordListViewController {
-	private func handleAPIResult(_ result: Result<[WordViewModel], NetworkError>) {
+	private func handleAPIResult(_ result: Result<[Word], NetworkError>) {
 		DispatchQueue.mainAsyncIfNeeded { [weak self] in
 			self?.tableView.refreshControl?.endRefreshing()
 			switch result {
-				case .success(let wordVMs):
-					self?.wordViewModels = wordVMs
+				case .success(let words):
+					self?.words = words
 					self?.tableView.reloadSections(.init(integer: 0), with: .automatic)
 				case .failure(let error):
 					self?.showAlert(withError: error)
@@ -111,10 +114,10 @@ extension WordListViewController {
 		DispatchQueue.mainAsyncIfNeeded { [weak self] in
 			self?.tableView.refreshControl?.beginRefreshing()
 		}
-		service?.loadDefinitions(for: searchTerm, completion: handleAPIResult)
+		service?.fetchDefinitions(for: searchTerm, completion: handleAPIResult)
 	}
 
-	func debounceSearchBarTextField() {
+	private func debounceSearchBarTextField() {
 		NotificationCenter.default.publisher(
 			for: UISearchTextField.textDidChangeNotification,
 			object: searchController.searchBar.searchTextField
@@ -131,8 +134,9 @@ extension WordListViewController {
 		}
 		.store(in: &cancellable)
 	}
-}
 
-extension WordListViewController: UISearchBarDelegate {
-
+	@objc private func clearTapped() {
+		words = []
+		tableView.reloadSections(.init(integer: 0), with: .automatic)
+	}
 }

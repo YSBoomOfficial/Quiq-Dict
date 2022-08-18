@@ -17,7 +17,10 @@ enum NetworkError: Error, CustomStringConvertible {
 		switch self {
 			case .badURL: return "The word you entered doesn't seem to exist."
 			case .badResponse(let response):
-				return response == 404 ? "The word you entered doesn't seem to exist." : "There is something wrong with the server. Response Code \(response)"
+				switch response {
+					case 404: return "The word you entered could not be found"
+					default: return "Server returned an unknown response code: \(response)"
+				}
 			case .decodingError: return "The Server's response couldn't be decoded correctly"
 			case .other(let error):  return "Something went wrong. \(error.localizedDescription)"
 		}
