@@ -91,7 +91,6 @@ extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		show(WordDetailViewController(word: words[indexPath.row]), sender: self)
 	}
 }
 

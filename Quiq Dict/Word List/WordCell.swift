@@ -18,23 +18,6 @@ class WordCell: UITableViewCell {
 		fatalError("init?(coder: NSCoder) has not been implemented")
 	}
 
-	private func makeAttributedString(title: String, phonetics: String) -> NSAttributedString {
-		let titleAttributes = [
-			NSAttributedString.Key.foregroundColor: UIColor.label
-		]
-
-		let subtitleAttributes = [
-			NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
-		]
-
-		let titleString = NSMutableAttributedString(string: "\(title) ", attributes: titleAttributes)
-		let subtitleString = NSAttributedString(string: phonetics, attributes: subtitleAttributes)
-
-		titleString.append(subtitleString)
-
-		return titleString
-	}
-
 	func configure(with word: Word) {
 		textLabel?.attributedText = makeAttributedString(title: word.title, phonetics: word.phoneticText)
 		detailTextLabel?.text = word.firstMeaning
