@@ -23,6 +23,7 @@ class WordDetailViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		title = word.title
+		navigationItem.largeTitleDisplayMode = .never
 		setupTableView()
 	}
 }
@@ -34,7 +35,6 @@ extension WordDetailViewController {
 		tableView.register(WordDetailCell.self, forCellReuseIdentifier: WordDetailCell.reuseID)
 		tableView.dataSource = self
 		tableView.delegate = self
-		tableView.allowsSelection = false
 		tableView.rowHeight = UITableView.automaticDimension
 
 		view.addSubview(tableView)

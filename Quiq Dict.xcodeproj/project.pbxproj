@@ -24,6 +24,7 @@
 		D395340B28B009E30072A52C /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340A28B009E30072A52C /* UILabel+Ext.swift */; };
 		D3F1F58828B936F100EA5330 /* WordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58728B936F100EA5330 /* WordDetailViewController.swift */; };
 		D3F1F58C28B93B3A00EA5330 /* WordDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58B28B93B3A00EA5330 /* WordDetailCell.swift */; };
+		D3F1F58E28B9432700EA5330 /* UIApplication+openLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		D395340A28B009E30072A52C /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		D3F1F58728B936F100EA5330 /* WordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailViewController.swift; sourceTree = "<group>"; };
 		D3F1F58B28B93B3A00EA5330 /* WordDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailCell.swift; sourceTree = "<group>"; };
+		D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+openLink.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 		D3226B3B2898B42A00DA964A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */,
 				D3226B392898B42600DA964A /* DispatchQueue+mainAsyncIfNeeded.swift */,
 				D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */,
 				D395340828B001440072A52C /* makeAttributedString.swift */,
@@ -227,6 +230,7 @@
 				D34EBDB02899617C00B41361 /* WordsService.swift in Sources */,
 				D34EBDA928995E5200B41361 /* NetworkError.swift in Sources */,
 				D3226B252898B0F100DA964A /* SceneDelegate.swift in Sources */,
+				D3F1F58E28B9432700EA5330 /* UIApplication+openLink.swift in Sources */,
 				D395340928B001440072A52C /* makeAttributedString.swift in Sources */,
 				D3F1F58828B936F100EA5330 /* WordDetailViewController.swift in Sources */,
 				D30EF9D928AF2128005C1358 /* WordCell.swift in Sources */,
