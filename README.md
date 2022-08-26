@@ -6,8 +6,8 @@ A Simple Dictionary App build with UIKit
 
 ## Features
 - MVC Architecture
-- Networking done with URLSession, Swift Result Type
-- No Stroyboards, Fully Programatic UI
+- URLSession and Swift Result Type for Networking
+- No Storyboards, Fully Programatic UI
 
 ## API
 For more information on the API used in the app see [dictionaryapi.dev](https://dictionaryapi.dev/)
