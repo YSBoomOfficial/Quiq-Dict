@@ -57,6 +57,7 @@ extension WordDetailViewController: UITableViewDataSource, UITableViewDelegate {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: WordDetailCell.reuseID, for: indexPath) as? WordDetailCell else {
 			fatalError("Could not dequeue WordCell")
 		}
+		cell.parent = self
 		cell.configure(with: word)
 		return cell
 	}

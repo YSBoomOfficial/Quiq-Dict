@@ -23,8 +23,13 @@ struct Word: Codable {
 		let sourceUrl: String?
 		let license: License?
 
-		var audioAccentRegion: String? {
-			audio.components(separatedBy: "/").last?.components(separatedBy: ".").first?.components(separatedBy: "-").last?.uppercased()
+		var audioAccentRegion: String {
+			guard !audio.isEmpty else { return "N/a" }
+			return audio.components(separatedBy: "/").last?.components(separatedBy: ".").first?.components(separatedBy: "-").last?.uppercased() ?? "N/a"
+		}
+
+		var displayText: String {
+			text ?? "N/a"
 		}
 	}
 
@@ -35,12 +40,37 @@ struct Word: Codable {
 		let synonyms: [String]
 		let antonyms: [String]
 
+		var synonymsText: String {
+			guard !synonyms.isEmpty else { return "Synonyms: N/a" }
+			return "Synonyms: " + synonyms.joined(separator: ", ")
+		}
+
+		var antonymsText: String {
+			guard !antonyms.isEmpty else { return "Antonyms: N/a" }
+			return "Antonyms: " + antonyms.joined(separator: ", ")
+		}
+
 		// MARK: Word.Meaning.Definition
 		struct Definition: Codable {
 			let definition: String
 			let synonyms: [String]
 			let antonyms: [String]
 			let example: String?
+
+			var synonymsText: String {
+				guard !synonyms.isEmpty else { return "Synonyms: N/a" }
+				return "Synonyms: " + synonyms.joined(separator: ", ")
+			}
+
+			var antonymsText: String {
+				guard !antonyms.isEmpty else { return "Antonyms: N/a" }
+				return "Antonyms: " + antonyms.joined(separator: ", ")
+			}
+
+			var exampleText: String {
+				example ?? "Example: N/a"
+			}
+
 		}
 	}
 
@@ -66,7 +96,7 @@ struct Word: Codable {
 		if let phonetic = phonetic {
 			return phonetic
 		} else {
-			guard let phon = phonetics.first(where: { $0.text != nil }) else { return "" }
+			guard let phon = phonetics.first(where: { $0.text != nil }) else { return "N/A" }
 			return phon.text!
 		}
 	}

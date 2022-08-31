@@ -15,6 +15,12 @@ extension UIViewController {
 		showDetailViewController(alert, sender: self)
 	}
 
+	func showAlert(withError error: Error) {
+		let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+		alert.addAction(.init(title: "Ok", style: .default))
+		showDetailViewController(alert, sender: self)
+	}
+
 	func showAlert(title: String, message: String? = nil) {
 		let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 		alert.addAction(.init(title: "Ok", style: .default))
