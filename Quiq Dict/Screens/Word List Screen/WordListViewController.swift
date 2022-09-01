@@ -35,6 +35,7 @@ class WordListViewController: UIViewController {
 		title = "Quiq Dict"
 
 		navigationItem.leftBarButtonItem = .init(title: "Clear", style: .done, target: self, action: #selector(clearTapped))
+		navigationItem.leftBarButtonItem!.isEnabled = false
 
 		setupTableView()
 		setupSearchController()
@@ -104,6 +105,7 @@ extension WordListViewController {
 				case .success(let words):
 					self?.words = words
 					self?.tableView.reloadSections(.init(integer: 0), with: .automatic)
+					self?.navigationItem.leftBarButtonItem!.isEnabled = true
 				case .failure(let error):
 					self?.showAlert(withError: error)
 			}
@@ -135,8 +137,9 @@ extension WordListViewController {
 		.store(in: &cancellable)
 	}
 
-	@objc private func clearTapped() {
+	@objc private func clearTapped(_ sender: UIBarButtonItem) {
 		words = []
 		tableView.reloadSections(.init(integer: 0), with: .automatic)
+		sender.isEnabled = false
 	}
 }
