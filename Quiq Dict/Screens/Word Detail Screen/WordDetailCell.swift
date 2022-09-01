@@ -50,106 +50,103 @@ class WordDetailCell: UITableViewCell {
 
 }
 
-// MARK: Config Views for Title Label, License and Source URLs
+// MARK: Title Label Config and Subtitle Label method
 extension WordDetailCell {
-	// MARK: Title Label
 	private func configureTitleLabelView() {
 		let titleLabel = Label(attributedText: makeAttributedString(title: word.title, phonetics: word.phoneticText))
-		titleLabel.bottomInset = 10
+		titleLabel.bottomInset = 5
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		titleLabel.font = .preferredFont(forTextStyle: .title1, compatibleWith: .init(legibilityWeight: .bold))
 		stackView.addArrangedSubview(titleLabel)
 	}
 
-	// MARK: Bottom License View
-	private func configureBottomLicenseView() {
-		let bottomLicenseView = makeLicenseView(forLicense: word.license, with: .title2)
-		stackView.addArrangedSubview(bottomLicenseView)
+	private func makeSubtitleLabel(withText text: String, font: UIFont.TextStyle) -> Label {
+		let subtitleLabel = Label(text: text)
+		subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+		subtitleLabel.font = .preferredFont(forTextStyle: font, compatibleWith: .init(legibilityWeight: .bold))
+		return subtitleLabel
 	}
-
-	// MARK: sourceUrls
-	private func configureSourceURLsView() {
-		let stack = UIStackView()
-		stack.translatesAutoresizingMaskIntoConstraints = false
-		stack.axis = .vertical
-		stack.alignment = .leading
-		stack.spacing = 5
-
-		let sourceUrlsLabel = makeSubtitleLabel(withText: "Source URLs", font: .title2)
-		stack.addArrangedSubview(sourceUrlsLabel)
-
-		for url in word.sourceUrls {
-			stack.addArrangedSubview(makeLinkButton(forURL: url))
-		}
-
-		stackView.addArrangedSubview(stack)
-	}
-
 }
 
 // MARK: Config Views for Phonetics
 extension WordDetailCell {
 	private func configurePhoneticsView() {
-		let stack = UIStackView()
-		stack.translatesAutoresizingMaskIntoConstraints = false
-		stack.axis = .vertical
-		stack.alignment = .leading
-		stack.spacing = 5
+		let phoneticsVStack = UIStackView()
+		phoneticsVStack.translatesAutoresizingMaskIntoConstraints = false
+		phoneticsVStack.axis = .vertical
+		phoneticsVStack.alignment = .leading
+		phoneticsVStack.spacing = 5
 
-		stack.addArrangedSubview(makeSubtitleLabel(withText: "Phonetics", font: .title2))
+		let phoneticsLabel = makeSubtitleLabel(withText: "Phonetics", font: .title2)
+		phoneticsLabel.topInset = 5
+		phoneticsVStack.addArrangedSubview(phoneticsLabel)
 
 		for i in word.phonetics.indices {
-			let phonetic = word.phonetics[i]
-
-			let innerStackView = UIStackView()
-			innerStackView.translatesAutoresizingMaskIntoConstraints = false
-			innerStackView.axis = .horizontal
-			innerStackView.alignment = .leading
-			innerStackView.spacing = 5
-
-			let textLabel = Label(attributedText: makeAttributedString(title: phonetic.audioAccentRegion, phonetics: phonetic.displayText))
-			innerStackView.addArrangedSubview(textLabel)
-
-			if !phonetic.audio.isEmpty {
-				innerStackView.addArrangedSubview(makeAudioButton(withTag: i))
-			} else {
-				innerStackView.addArrangedSubview(Label(text: "Audio Unavailable"))
-			}
-
-			stack.addArrangedSubview(innerStackView)
-
-			if let license = phonetic.license {
-				stack.addArrangedSubview(makeLicenseView(forLicense: license, with: .title3))
-			} else {
-				stack.addArrangedSubview(makeSubtitleLabel(withText: "License: N/a", font: .title3))
-			}
+			phoneticsVStack.addArrangedSubview(makePhoneticView(for: i))
 		}
 
-		stackView.addArrangedSubview(stack)
+		stackView.addArrangedSubview(phoneticsVStack)
 	}
 
-	// MARK: makeAudioButton
+	private func makePhoneticView(for index: Int) -> UIStackView {
+		let phonetic = word.phonetics[index]
+
+		let phoneticHStack = UIStackView()
+		phoneticHStack.translatesAutoresizingMaskIntoConstraints = false
+		phoneticHStack.axis = .horizontal
+		phoneticHStack.alignment = .leading
+		phoneticHStack.spacing = 5
+
+		let textLabel = Label(attributedText: makeAttributedString(title: phonetic.audioAccentRegion, phonetics: phonetic.displayText))
+		phoneticHStack.addArrangedSubview(textLabel)
+
+		if !phonetic.audio.isEmpty {
+			phoneticHStack.addArrangedSubview(makeAudioButton(withTag: index))
+		} else {
+			let audioUnavailableLabel = Label(text: "Audio Unavailable")
+			audioUnavailableLabel.numberOfLines = 1
+			phoneticHStack.addArrangedSubview(audioUnavailableLabel)
+		}
+
+		let phoneticAndLicenseVStack = UIStackView()
+		phoneticAndLicenseVStack.translatesAutoresizingMaskIntoConstraints = false
+		phoneticAndLicenseVStack.axis = .vertical
+		phoneticAndLicenseVStack.alignment = .leading
+		phoneticAndLicenseVStack.spacing = 5
+
+		phoneticAndLicenseVStack.addArrangedSubview(phoneticHStack)
+
+		if let license = phonetic.license {
+			phoneticAndLicenseVStack.addArrangedSubview(makeLicenseView(forLicense: license, with: .title3))
+		} else {
+			phoneticAndLicenseVStack.addArrangedSubview(makeSubtitleLabel(withText: "License: N/a", font: .title3))
+		}
+
+		return phoneticAndLicenseVStack
+	}
+
 	private func makeAudioButton(withTag tag: Int) -> UIButton {
-		let button = UIButton(type: .custom)
-		button.setImage(.init(systemName: "speaker.wave.3.fill"), for: .normal)
-		button.tag = tag
-		button.addTarget(self, action: #selector(playAudio), for: .primaryActionTriggered)
-		return button
+		let audioButton = UIButton(type: .custom)
+		audioButton.setImage(.init(systemName: "speaker.wave.3"), for: .normal)
+		audioButton.tag = tag
+		audioButton.addTarget(self, action: #selector(playAudio), for: .primaryActionTriggered)
+		return audioButton
 	}
 
 	@objc private func playAudio(_ sender: UIButton) {
-		let audioURL = word.phonetics[sender.tag].audio
-		PhoneticsAudioDownloader.shared.fetchPhoneticsAudio(from: audioURL) { [weak self] result in
-			switch result {
-				case let .success(data):
-					do {
-						self?.player = try AVAudioPlayer(data: data)
-						self?.player!.play()
-					} catch {
-						self?.parent?.showAlert(withError: error)
-					}
-				case let .failure(networkError):
-					self?.parent?.showAlert(withError: networkError)
+		PhoneticsAudioDownloader.shared.fetchPhoneticsAudio(from: word.phonetics[sender.tag].audio) { [weak self] result in
+			DispatchQueue.mainAsyncIfNeeded {
+				switch result {
+					case let .success(data):
+						do {
+							self?.player = try AVAudioPlayer(data: data)
+							self?.player!.play()
+						} catch {
+							self?.parent?.showAlert(withError: error)
+						}
+					case let .failure(networkError):
+						self?.parent?.showAlert(withError: networkError)
+				}
 			}
 		}
 	}
@@ -159,47 +156,134 @@ extension WordDetailCell {
 // MARK: Config Views for Meanings
 extension WordDetailCell {
 	private func configureMeaningsView() {
-		stackView.addArrangedSubview(makeSubtitleLabel(withText: "Meanings", font: .title2))
+		let meaningsVStack = UIStackView()
+		meaningsVStack.translatesAutoresizingMaskIntoConstraints = false
+		meaningsVStack.axis = .vertical
+		meaningsVStack.alignment = .leading
+		meaningsVStack.spacing = 10
+
+		let meaningLabel = makeSubtitleLabel(withText: "Meanings", font: .title2)
+		meaningLabel.topInset = 5
+		meaningsVStack.addArrangedSubview(meaningLabel)
+
+		for meaning in word.meanings {
+			meaningsVStack.addArrangedSubview(makeMeaningView(forMeaning: meaning))
+		}
+
+		stackView.addArrangedSubview(meaningsVStack)
+
+	}
+
+	private func makeMeaningView(forMeaning meaning: Word.Meaning) -> UIStackView {
+		let meaningVStack = UIStackView()
+		meaningVStack.translatesAutoresizingMaskIntoConstraints = false
+		meaningVStack.axis = .vertical
+		meaningVStack.alignment = .leading
+		meaningVStack.spacing = 5
+
+		meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "Part of Speech: \(meaning.partOfSpeech.capitalized)", font: .title3))
+
+		if !meaning.synonyms.isEmpty {
+			meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "General Synonyms:", font: .headline))
+			meaningVStack.addArrangedSubview(Label(text: meaning.synonyms.joined(separator: ", ")))
+		}
+
+		if !meaning.antonyms.isEmpty {
+			meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "General Antonyms:", font: .headline))
+			meaningVStack.addArrangedSubview(Label(text: meaning.antonyms.joined(separator: ", ")))
+		}
+
+		meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "Definitions:", font: .headline))
+
+		for definition in meaning.definitions {
+			meaningVStack.addArrangedSubview(makeDefinitionView(forDefinition: definition))
+		}
+
+		return meaningVStack
+	}
+
+	private func makeDefinitionView(forDefinition definition: Word.Meaning.Definition) -> UIStackView {
+		let definitionVStack = UIStackView()
+		definitionVStack.translatesAutoresizingMaskIntoConstraints = false
+		definitionVStack.axis = .vertical
+		definitionVStack.alignment = .leading
+		definitionVStack.spacing = 5
+
+		if !definition.definition.isEmpty {
+			definitionVStack.addArrangedSubview(Label(text: definition.definition))
+		}
+
+		if !definition.synonyms.isEmpty {
+			definitionVStack.addArrangedSubview(makeSubtitleLabel(withText: "Synonyms:", font: .subheadline))
+			definitionVStack.addArrangedSubview(Label(text: definition.synonyms.joined(separator: ", ")))
+		}
+
+		if !definition.antonyms.isEmpty {
+			definitionVStack.addArrangedSubview(makeSubtitleLabel(withText: "Antonyms:", font: .subheadline))
+			definitionVStack.addArrangedSubview(Label(text: definition.antonyms.joined(separator: ", ")))
+		}
+
+		if let example = definition.example {
+			definitionVStack.addArrangedSubview(Label(text: " - Example: \(example)"))
+		}
+
+		return definitionVStack
 	}
 }
 
-// MARK: Helper methods to create views
+// MARK: Config Views for License
 extension WordDetailCell {
-	// MARK: Make Subtitle Label
-	private func makeSubtitleLabel(withText text: String, font: UIFont.TextStyle) -> Label {
-		let label = Label(text: text)
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = .preferredFont(forTextStyle: font, compatibleWith: .init(legibilityWeight: .bold))
-		return label
+	private func configureBottomLicenseView() {
+		stackView.addArrangedSubview(makeLicenseView(forLicense: word.license, with: .title2))
 	}
 
-	// MARK: Reusable License View
 	private func makeLicenseView(forLicense license: Word.License, with font: UIFont.TextStyle) -> UIStackView {
-		let stack = UIStackView()
-		stack.translatesAutoresizingMaskIntoConstraints = false
-		stack.axis = .vertical
-		stack.alignment = .leading
-		stack.spacing = 5
+		let licenseVStack = UIStackView()
+		licenseVStack.translatesAutoresizingMaskIntoConstraints = false
+		licenseVStack.axis = .vertical
+		licenseVStack.alignment = .leading
 
 		let licenseLabel = makeSubtitleLabel(withText: "License: \(license.name)", font: font)
-		stack.addArrangedSubview(licenseLabel)
-		stack.addArrangedSubview(makeLinkButton(forURL: license.url))
+		licenseLabel.topInset = 5
+		licenseVStack.addArrangedSubview(licenseLabel)
+		licenseVStack.addArrangedSubview(makeLinkButton(forURL: license.url))
 
-		return stack
+		return licenseVStack
 	}
 
-	// MARK: makeLinkButton
 	private func makeLinkButton(forURL url: String) -> UIButton {
-		let button = UIButton(type: .custom)
+		let linkButton = UIButton()
 		let attrString = NSAttributedString(string: url, attributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline), .link: url])
-		button.setAttributedTitle(attrString, for: .normal)
-		button.addTarget(self, action: #selector(linkTapped), for: .primaryActionTriggered)
-		return button
+		linkButton.setAttributedTitle(attrString, for: .normal)
+		linkButton.addTarget(self, action: #selector(linkTapped), for: .primaryActionTriggered)
+		return linkButton
 	}
 
 	@objc private func linkTapped(_ sender: UIButton) {
 		guard let buttonText = sender.attributedTitle(for: .normal)?.string,
 			  let url = URL(string: buttonText) else { return }
 		UIApplication.shared.open(link: url)
+	}
+}
+
+// MARK: Config Views for Source URLs
+extension WordDetailCell {
+	// MARK: sourceUrls
+	private func configureSourceURLsView() {
+		let sourceURLsVStack = UIStackView()
+		sourceURLsVStack.translatesAutoresizingMaskIntoConstraints = false
+		sourceURLsVStack.axis = .vertical
+		sourceURLsVStack.alignment = .leading
+		sourceURLsVStack.spacing = 5
+
+		let sourceUrlsLabel = makeSubtitleLabel(withText: "Source URLs", font: .title2)
+		sourceUrlsLabel.topInset = 5
+		sourceURLsVStack.addArrangedSubview(sourceUrlsLabel)
+
+		for url in word.sourceUrls {
+			sourceURLsVStack.addArrangedSubview(makeLinkButton(forURL: url))
+		}
+
+		stackView.addArrangedSubview(sourceURLsVStack)
 	}
 }
