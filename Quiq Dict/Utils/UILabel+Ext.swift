@@ -31,6 +31,7 @@ class Label: UILabel {
 		self.leftInset = leftInset
 		self.rightInset = rightInset
 		super.init(frame: .zero)
+		numberOfLines = 0
 	}
 
 	convenience init(text: String) {

@@ -40,36 +40,12 @@ struct Word: Codable {
 		let synonyms: [String]
 		let antonyms: [String]
 
-		var synonymsText: String {
-			guard !synonyms.isEmpty else { return "Synonyms: N/a" }
-			return "Synonyms: " + synonyms.joined(separator: ", ")
-		}
-
-		var antonymsText: String {
-			guard !antonyms.isEmpty else { return "Antonyms: N/a" }
-			return "Antonyms: " + antonyms.joined(separator: ", ")
-		}
-
 		// MARK: Word.Meaning.Definition
 		struct Definition: Codable {
 			let definition: String
 			let synonyms: [String]
 			let antonyms: [String]
 			let example: String?
-
-			var synonymsText: String {
-				guard !synonyms.isEmpty else { return "Synonyms: N/a" }
-				return "Synonyms: " + synonyms.joined(separator: ", ")
-			}
-
-			var antonymsText: String {
-				guard !antonyms.isEmpty else { return "Antonyms: N/a" }
-				return "Antonyms: " + antonyms.joined(separator: ", ")
-			}
-
-			var exampleText: String {
-				example ?? "Example: N/a"
-			}
 
 		}
 	}
