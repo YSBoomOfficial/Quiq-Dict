@@ -42,10 +42,21 @@ class WordDetailCell: UITableViewCell {
 		self.word = word
 
 		configureTitleLabelView()
-		configurePhoneticsView()
-		configureMeaningsView()
+
+		if !word.phonetics.isEmpty {
+			configurePhoneticsView()
+		}
+
+		if !word.meanings.isEmpty {
+			configureMeaningsView()
+		}
+
 		configureBottomLicenseView()
-		configureSourceURLsView()
+
+		if !word.sourceUrls.isEmpty {
+			configureSourceURLsView()
+		}
+
 	}
 
 }
@@ -82,7 +93,9 @@ extension WordDetailCell {
 		phoneticsVStack.addArrangedSubview(phoneticsLabel)
 
 		for i in word.phonetics.indices {
-			phoneticsVStack.addArrangedSubview(makePhoneticView(for: i))
+			if word.phonetics[i].noValues == false {
+				phoneticsVStack.addArrangedSubview(makePhoneticView(for: i))
+			}
 		}
 
 		stackView.addArrangedSubview(phoneticsVStack)
@@ -97,7 +110,7 @@ extension WordDetailCell {
 		phoneticHStack.alignment = .leading
 		phoneticHStack.spacing = 5
 
-		let textLabel = Label(attributedText: makeAttributedString(title: phonetic.audioAccentRegion, phonetics: phonetic.displayText))
+		let textLabel = Label(attributedText: makeAttributedString(title: phonetic.audioAccentRegion ?? "", phonetics: phonetic.displayText))
 		phoneticHStack.addArrangedSubview(textLabel)
 
 		if !phonetic.audio.isEmpty {
@@ -118,8 +131,6 @@ extension WordDetailCell {
 
 		if let license = phonetic.license {
 			phoneticAndLicenseVStack.addArrangedSubview(makeLicenseView(forLicense: license, with: .title3))
-		} else {
-			phoneticAndLicenseVStack.addArrangedSubview(makeSubtitleLabel(withText: "License: N/a", font: .title3))
 		}
 
 		return phoneticAndLicenseVStack
@@ -166,12 +177,12 @@ extension WordDetailCell {
 		meaningLabel.topInset = 5
 		meaningsVStack.addArrangedSubview(meaningLabel)
 
+
 		for meaning in word.meanings {
 			meaningsVStack.addArrangedSubview(makeMeaningView(forMeaning: meaning))
 		}
 
 		stackView.addArrangedSubview(meaningsVStack)
-
 	}
 
 	private func makeMeaningView(forMeaning meaning: Word.Meaning) -> UIStackView {
@@ -185,18 +196,19 @@ extension WordDetailCell {
 
 		if !meaning.synonyms.isEmpty {
 			meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "General Synonyms:", font: .headline))
-			meaningVStack.addArrangedSubview(Label(text: meaning.synonyms.joined(separator: ", ")))
+			meaningVStack.addArrangedSubview(Label(text: meaning.synonyms.map(\.capitalized).joined(separator: ", ")))
 		}
 
 		if !meaning.antonyms.isEmpty {
 			meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "General Antonyms:", font: .headline))
-			meaningVStack.addArrangedSubview(Label(text: meaning.antonyms.joined(separator: ", ")))
+			meaningVStack.addArrangedSubview(Label(text: meaning.antonyms.map(\.capitalized).joined(separator: ", ")))
 		}
 
-		meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "Definitions:", font: .headline))
-
-		for definition in meaning.definitions {
-			meaningVStack.addArrangedSubview(makeDefinitionView(forDefinition: definition))
+		if !meaning.definitions.isEmpty {
+			meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "Definitions:", font: .headline))
+			for definition in meaning.definitions {
+				meaningVStack.addArrangedSubview(makeDefinitionView(forDefinition: definition))
+			}
 		}
 
 		return meaningVStack
@@ -210,21 +222,21 @@ extension WordDetailCell {
 		definitionVStack.spacing = 5
 
 		if !definition.definition.isEmpty {
-			definitionVStack.addArrangedSubview(Label(text: definition.definition))
+			definitionVStack.addArrangedSubview(Label(text: "- \(definition.definition)"))
 		}
 
 		if !definition.synonyms.isEmpty {
 			definitionVStack.addArrangedSubview(makeSubtitleLabel(withText: "Synonyms:", font: .subheadline))
-			definitionVStack.addArrangedSubview(Label(text: definition.synonyms.joined(separator: ", ")))
+			definitionVStack.addArrangedSubview(Label(text: definition.synonyms.map(\.capitalized).joined(separator: ", ")))
 		}
 
 		if !definition.antonyms.isEmpty {
 			definitionVStack.addArrangedSubview(makeSubtitleLabel(withText: "Antonyms:", font: .subheadline))
-			definitionVStack.addArrangedSubview(Label(text: definition.antonyms.joined(separator: ", ")))
+			definitionVStack.addArrangedSubview(Label(text: definition.antonyms.map(\.capitalized).joined(separator: ", ")))
 		}
 
 		if let example = definition.example {
-			definitionVStack.addArrangedSubview(Label(text: " - Example: \(example)"))
+			definitionVStack.addArrangedSubview(Label(text: "Example: \"\(example)\""))
 		}
 
 		return definitionVStack
