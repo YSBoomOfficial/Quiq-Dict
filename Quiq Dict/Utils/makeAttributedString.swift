@@ -16,10 +16,17 @@ func makeAttributedString(title: String, phonetics: String) -> NSAttributedStrin
 		.foregroundColor: UIColor.secondaryLabel
 	]
 
-	let titleString = NSMutableAttributedString(string: "\(title) ", attributes: titleAttributes)
-	let subtitleString = NSAttributedString(string: phonetics, attributes: subtitleAttributes)
+	switch (title.isEmpty, phonetics.isEmpty) {
+		case (true, true): return .init(string: "")
+		case (true, false): // Title is empty
+			return NSMutableAttributedString(string: phonetics, attributes: subtitleAttributes)
+		case (false, true): // Phonetics is empty
+			return NSMutableAttributedString(string: title, attributes: titleAttributes)
+		case (false, false): // Both have non-empty values
+			let titleString = NSMutableAttributedString(string: "\(title) ", attributes: titleAttributes)
+			let subtitleString = NSMutableAttributedString(string: phonetics, attributes: subtitleAttributes)
+			titleString.append(subtitleString)
+			return titleString
+	}
 
-	titleString.append(subtitleString)
-
-	return titleString
 }

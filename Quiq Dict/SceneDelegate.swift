@@ -15,8 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window?.windowScene = windowScene
-//		window?.rootViewController = UINavigationController(rootViewController: WordListViewController(service: WordAPI.shared))
-		window?.rootViewController = UINavigationController(rootViewController: WordDetailViewController(word: .example))
+		window?.rootViewController = UINavigationController(rootViewController: WordListViewController(service: WordAPI.shared))
 		window?.makeKeyAndVisible()
 	}
 

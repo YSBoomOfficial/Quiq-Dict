@@ -23,13 +23,17 @@ struct Word: Codable {
 		let sourceUrl: String?
 		let license: License?
 
-		var audioAccentRegion: String {
-			guard !audio.isEmpty else { return "N/a" }
-			return audio.components(separatedBy: "/").last?.components(separatedBy: ".").first?.components(separatedBy: "-").last?.uppercased() ?? "N/a"
+		var audioAccentRegion: String? {
+			guard !audio.isEmpty else { return nil }
+			return audio.components(separatedBy: "/").last?.components(separatedBy: ".").first?.components(separatedBy: "-").last?.uppercased()
 		}
 
 		var displayText: String {
 			text ?? "N/a"
+		}
+
+		var noValues: Bool {
+			text == nil && audio.isEmpty && sourceUrl == nil && license == nil
 		}
 	}
 
@@ -46,7 +50,6 @@ struct Word: Codable {
 			let synonyms: [String]
 			let antonyms: [String]
 			let example: String?
-
 		}
 	}
 
@@ -72,7 +75,7 @@ struct Word: Codable {
 		if let phonetic = phonetic {
 			return phonetic
 		} else {
-			guard let phon = phonetics.first(where: { $0.text != nil }) else { return "N/A" }
+			guard !phonetics.isEmpty, let phon = phonetics.first(where: { $0.text != nil }) else { return "N/a" }
 			return phon.text!
 		}
 	}
