@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: Word
-struct Word: Codable {
+struct Word: Codable, Equatable {
 	let word: String
 	let phonetic: String?
 	let phonetics: [Phonetic]
@@ -17,7 +17,7 @@ struct Word: Codable {
 	let sourceUrls: [String]
 
 	// MARK: Word.Phonetic
-	struct Phonetic: Codable {
+	struct Phonetic: Codable, Equatable {
 		let text: String?
 		let audio: String
 		let sourceUrl: String?
@@ -38,14 +38,14 @@ struct Word: Codable {
 	}
 
 	// MARK: Word.Meaning
-	struct Meaning: Codable {
+	struct Meaning: Codable, Equatable {
 		let partOfSpeech: String
 		let definitions: [Definition]
 		let synonyms: [String]
 		let antonyms: [String]
 
 		// MARK: Word.Meaning.Definition
-		struct Definition: Codable {
+		struct Definition: Codable, Equatable {
 			let definition: String
 			let synonyms: [String]
 			let antonyms: [String]
@@ -54,7 +54,7 @@ struct Word: Codable {
 	}
 
 	// MARK: Word.License
-	struct License: Codable {
+	struct License: Codable, Equatable {
 		let name: String
 		let url: String
 	}
@@ -80,7 +80,6 @@ struct Word: Codable {
 		}
 	}
 }
-
 
 extension Word {
 	static let example = Word(

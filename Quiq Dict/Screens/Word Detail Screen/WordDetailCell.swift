@@ -11,8 +11,11 @@ import UIKit
 class WordDetailCell: UITableViewCell {
 	static let reuseID = "WordDetailCell"
 	weak var parent: UIViewController?
+
 	private var player: AVAudioPlayer?
+
 	private var word: Word!
+	private var service: PhoneticsAudioLoader!
 
 	private let stackView = UIStackView()
 
@@ -38,8 +41,9 @@ class WordDetailCell: UITableViewCell {
 		])
 	}
 
-	func configure(with word: Word) {
+	func configure(with word: Word, using service: PhoneticsAudioLoader) {
 		self.word = word
+		self.service = service
 
 		configureTitleLabelView()
 
@@ -58,7 +62,6 @@ class WordDetailCell: UITableViewCell {
 		}
 
 	}
-
 }
 
 // MARK: Title Label Config and Subtitle Label method
@@ -145,8 +148,8 @@ extension WordDetailCell {
 	}
 
 	@objc private func playAudio(_ sender: UIButton) {
-		PhoneticsAudioDownloader.shared.fetchPhoneticsAudio(from: word.phonetics[sender.tag].audio) { [weak self] result in
-			DispatchQueue.mainAsyncIfNeeded {
+		service.fetchPhoneticsAudio(from: word.phonetics[sender.tag].audio) { [weak self] result in
+			DispatchQueue.main.async {
 				switch result {
 					case let .success(data):
 						do {
@@ -161,7 +164,6 @@ extension WordDetailCell {
 			}
 		}
 	}
-
 }
 
 // MARK: Config Views for Meanings

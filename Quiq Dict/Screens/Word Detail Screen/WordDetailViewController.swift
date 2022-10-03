@@ -10,9 +10,11 @@ import UIKit
 class WordDetailViewController: UIViewController {
 	private let tableView = UITableView(frame: .zero, style: .insetGrouped)
 	private let word: Word
+	private let service: PhoneticsAudioLoader
 
-	init(word: Word) {
+	init(word: Word, audioService: PhoneticsAudioLoader) {
 		self.word = word
+		self.service = audioService
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -58,7 +60,7 @@ extension WordDetailViewController: UITableViewDataSource, UITableViewDelegate {
 			fatalError("Could not dequeue WordCell")
 		}
 		cell.parent = self
-		cell.configure(with: word)
+		cell.configure(with: word, using: service)
 		return cell
 	}
 }

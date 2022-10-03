@@ -15,8 +15,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window?.windowScene = windowScene
-		window?.rootViewController = UINavigationController(rootViewController: WordListViewController(service: WordAPI.shared))
+		window?.rootViewController = makeRootVC()
 		window?.makeKeyAndVisible()
+	}
+
+	private func makeRootVC() -> UITabBarController {
+		let wordListVCLoadsRemoteData = WordListViewController(
+			wordService: RemoteWordsLoader.shared,
+			audioService: RemotePhoneticsAudioLoader.shared,
+			saveAction: { word in
+				// DataManager.shared.add(word: word)
+			},
+			deleteAction: nil // No Delete action for Remote Loaders
+		)
+		
+		wordListVCLoadsRemoteData.tabBarItem = .init(title: "Search", image: .init(systemName: "magnifyingglass"), tag: 0)
+
+		let tabBarVC = UITabBarController()
+		tabBarVC.viewControllers = [
+			UINavigationController(rootViewController: wordListVCLoadsRemoteData),
+		]
+		return tabBarVC
 	}
 
 	func sceneDidDisconnect(_ scene: UIScene) {

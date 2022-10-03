@@ -12,19 +12,42 @@ class WordListViewController: UIViewController {
 	private let searchController = UISearchController(searchResultsController: nil)
 	private let tableView = UITableView(frame: .zero, style: .insetGrouped)
 
-	private var service: WordsService?
-	private var words = [Word]()
+	private var wordService: WordsLoader
+	private var audioService: PhoneticsAudioLoader
+	private var saveAction: ((Word) -> Void)?
+	private var deleteAction: ((Word) -> Void)?
+
+	private(set) var words = [Word]() {
+		didSet {
+			tableView.reloadSections(.init(integer: 0), with: .automatic)
+			if words.isEmpty {
+				navigationItem.leftBarButtonItem!.isEnabled = false
+			} else {
+				navigationItem.leftBarButtonItem!.isEnabled = true
+			}
+		}
+	}
 
 	private var searchTerm = ""
-	private var cancellable = Set<AnyCancellable>()
-
-	init(service: WordsService) {
-		self.service = service
-		super.init(nibName: nil, bundle: nil)
-	}
+	private var cancellable: AnyCancellable?
 
 	required init?(coder: NSCoder) {
 		fatalError("init?(coder: NSCoder) has not been implemented")
+	}
+
+	init(
+		words: [Word] = [],
+		wordService: WordsLoader,
+		audioService: PhoneticsAudioLoader,
+		saveAction: ((Word) -> Void)? = nil,
+		deleteAction: ((Word) -> Void)? = nil
+	) {
+		self.words = words
+		self.wordService = wordService
+		self.audioService = audioService
+		self.saveAction = saveAction
+		self.deleteAction = deleteAction
+		super.init(nibName: nil, bundle: nil)
 	}
 
 	override func viewDidLoad() {
@@ -78,6 +101,7 @@ extension WordListViewController {
 
 // MARK: UITableViewControllerDataSource & UITableViewControllerDelegate
 extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
+	// MARK: Required Data Source & Delegate Methods
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		words.count
 	}
@@ -92,20 +116,52 @@ extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		show(WordDetailViewController(word: words[indexPath.row]), sender: self)
+		show(WordDetailViewController(word: words[indexPath.row], audioService: audioService), sender: self)
+	}
+
+	// MARK: Cell Swipe Action Methods
+	func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		guard let save = saveAction else { return nil }
+		let saveAction = UIContextualAction(style: .normal, title: "Save") { [weak self] saveAction, view, completion in
+			guard let self else {
+				completion(false)
+				return
+			}
+			save(self.words[indexPath.row])
+			completion(true)
+		}
+
+		saveAction.backgroundColor = .systemGreen
+		saveAction.image = .init(systemName: "archivebox")
+
+		return .init(actions: [saveAction])
+	}
+
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		guard let delete = deleteAction else { return nil }
+		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] action, view, completion in
+			guard let self else {
+				completion(false)
+				return
+			}
+			delete(self.words[indexPath.row])
+			completion(true)
+		}
+
+		deleteAction.image = .init(systemName: "trash")
+		return .init(actions: [deleteAction])
+
 	}
 }
 
 // MARK: Actions
 extension WordListViewController {
 	private func handleAPIResult(_ result: Result<[Word], NetworkError>) {
-		DispatchQueue.mainAsyncIfNeeded { [weak self] in
+		DispatchQueue.main.async { [weak self] in
 			self?.tableView.refreshControl?.endRefreshing()
 			switch result {
 				case .success(let words):
 					self?.words = words
-					self?.tableView.reloadSections(.init(integer: 0), with: .automatic)
-					self?.navigationItem.leftBarButtonItem!.isEnabled = true
 				case .failure(let error):
 					self?.showAlert(withError: error)
 			}
@@ -113,14 +169,14 @@ extension WordListViewController {
 	}
 
 	@objc private func refresh() {
-		DispatchQueue.mainAsyncIfNeeded { [weak self] in
+		DispatchQueue.main.async { [weak self] in
 			self?.tableView.refreshControl?.beginRefreshing()
 		}
-		service?.fetchDefinitions(for: searchTerm, completion: handleAPIResult)
+		wordService.fetchDefinitions(for: searchTerm, completion: handleAPIResult)
 	}
 
 	private func debounceSearchBarTextField() {
-		NotificationCenter.default.publisher(
+		cancellable = NotificationCenter.default.publisher(
 			for: UISearchTextField.textDidChangeNotification,
 			object: searchController.searchBar.searchTextField
 		)
@@ -134,12 +190,10 @@ extension WordListViewController {
 				}
 			}
 		}
-		.store(in: &cancellable)
 	}
 
 	@objc private func clearTapped(_ sender: UIBarButtonItem) {
 		words = []
-		tableView.reloadSections(.init(integer: 0), with: .automatic)
 		sender.isEnabled = false
 	}
 }
