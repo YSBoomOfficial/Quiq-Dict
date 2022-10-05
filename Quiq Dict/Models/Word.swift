@@ -72,12 +72,9 @@ struct Word: Codable, Equatable {
 	}
 
 	var phoneticText: String {
-		if let phonetic = phonetic {
-			return phonetic
-		} else {
-			guard !phonetics.isEmpty, let phon = phonetics.first(where: { $0.text != nil }) else { return "N/a" }
-			return phon.text!
-		}
+		if let phonetic { return phonetic }
+		guard !phonetics.isEmpty, let phon = phonetics.first(where: { $0.text != nil }) else { return "N/a" }
+		return phon.text!
 	}
 }
 

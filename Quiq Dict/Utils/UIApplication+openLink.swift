@@ -8,16 +8,20 @@
 import UIKit
 
 extension UIApplication {
+	var rootViewController: UIViewController? {
+		(connectedScenes.first!.delegate as? SceneDelegate)?.window?.rootViewController
+	}
+
 	func open(link: URL) {
 		if canOpenURL(link) {
-			open(link) { success in
-				guard success == false else { return }
-				if let controller = (self.connectedScenes.first!.delegate as? SceneDelegate)?.window?.rootViewController {
+			open(link) { [weak self] success in
+				guard let self, success == false else { return }
+				if let controller = self.rootViewController {
 					controller.showAlert(title: "Something went wrong")
 				}
 			}
 		} else {
-			if let controller = (self.connectedScenes.first!.delegate as? SceneDelegate)?.window?.rootViewController {
+			if let controller = rootViewController {
 				controller.showAlert(title: "Something went wrong", message: "Could not open link")
 			}
 		}

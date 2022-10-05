@@ -12,11 +12,6 @@ class WordListViewController: UIViewController {
 	private let searchController = UISearchController(searchResultsController: nil)
 	private let tableView = UITableView(frame: .zero, style: .insetGrouped)
 
-	private var wordService: WordsLoader
-	private var audioService: PhoneticsAudioLoader
-	private var saveAction: ((Word) -> Void)?
-	private var deleteAction: ((Word) -> Void)?
-
 	private(set) var words = [Word]() {
 		didSet {
 			tableView.reloadSections(.init(integer: 0), with: .automatic)
@@ -28,8 +23,26 @@ class WordListViewController: UIViewController {
 		}
 	}
 
+	private var audioService: PhoneticsAudioLoader
+	private var searchAction: (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void
+	private var saveAction: ((Word) -> Void)?
+	private var deleteAction: ((Word) -> Void)?
+
 	private var searchTerm = ""
 	private var cancellable: AnyCancellable?
+
+	private(set) var isRefreshing = false {
+		didSet {
+			DispatchQueue.main.async { [weak self] in
+				guard let self else { return }
+				if self.isRefreshing {
+					self.tableView.refreshControl?.beginRefreshing()
+				} else {
+					self.tableView.refreshControl?.endRefreshing()
+				}
+			}
+		}
+	}
 
 	required init?(coder: NSCoder) {
 		fatalError("init?(coder: NSCoder) has not been implemented")
@@ -37,14 +50,14 @@ class WordListViewController: UIViewController {
 
 	init(
 		words: [Word] = [],
-		wordService: WordsLoader,
 		audioService: PhoneticsAudioLoader,
+		searchAction: @escaping (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void,
 		saveAction: ((Word) -> Void)? = nil,
 		deleteAction: ((Word) -> Void)? = nil
 	) {
 		self.words = words
-		self.wordService = wordService
 		self.audioService = audioService
+		self.searchAction = searchAction
 		self.saveAction = saveAction
 		self.deleteAction = deleteAction
 		super.init(nibName: nil, bundle: nil)
@@ -156,23 +169,22 @@ extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: Actions
 extension WordListViewController {
-	private func handleAPIResult(_ result: Result<[Word], NetworkError>) {
-		DispatchQueue.main.async { [weak self] in
-			self?.tableView.refreshControl?.endRefreshing()
-			switch result {
-				case .success(let words):
-					self?.words = words
-				case .failure(let error):
-					self?.showAlert(withError: error)
-			}
-		}
+	@objc private func refresh() {
+		isRefreshing = true
+		searchAction(searchTerm, handleAPIResult)
 	}
 
-	@objc private func refresh() {
+	private func handleAPIResult(_ result: Result<[Word], NetworkError>) {
 		DispatchQueue.main.async { [weak self] in
-			self?.tableView.refreshControl?.beginRefreshing()
+			guard let self else { return }
+			self.isRefreshing = false
+			switch result {
+				case .success(let words):
+					self.words = words
+				case .failure(let error):
+					self.showAlert(withError: error)
+			}
 		}
-		wordService.fetchDefinitions(for: searchTerm, completion: handleAPIResult)
 	}
 
 	private func debounceSearchBarTextField() {

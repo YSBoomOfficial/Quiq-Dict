@@ -20,10 +20,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	private func makeRootVC() -> UITabBarController {
+		// MARK: Remote Data Loader VC
 		let wordListVCLoadsRemoteData = WordListViewController(
-			wordService: RemoteWordsLoader.shared,
 			audioService: RemotePhoneticsAudioLoader.shared,
+			searchAction: RemoteWordsLoader.shared.fetchDefinitions,
 			saveAction: { word in
+				print("Save \(word) triggered")
 				// DataManager.shared.add(word: word)
 			},
 			deleteAction: nil // No Delete action for Remote Loaders
@@ -31,9 +33,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		wordListVCLoadsRemoteData.tabBarItem = .init(title: "Search", image: .init(systemName: "magnifyingglass"), tag: 0)
 
+		// MARK: Local Data Loader VC
+		let wordListVCLoadsLocalData = WordListViewController(
+			audioService: LocalPhoneticsAudioLoader.shared,
+			searchAction: LocalWordsLoader.shared.fetchDefinitions,
+			saveAction: nil, // No Save action for Local Loaders
+			deleteAction: { word in
+				print("Remove \(word) triggered")
+				// DataManager.shared.remove(word: word)
+			}
+		)
+		
+		wordListVCLoadsLocalData.tabBarItem = .init(title: "Saved", image: .init(systemName: "archivebox"), tag: 1)
+
 		let tabBarVC = UITabBarController()
 		tabBarVC.viewControllers = [
 			UINavigationController(rootViewController: wordListVCLoadsRemoteData),
+			UINavigationController(rootViewController: wordListVCLoadsLocalData),
 		]
 		return tabBarVC
 	}
