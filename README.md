@@ -1,9 +1,9 @@
 # Quiq-Dict
 A Simple Dictionary App build with UIKit
 
-## Features
+## How it's built 
+- UIKit programatic UI with AutoLayout
 - MVC Architecture
-- Programatic UI with AutoLayout
 - URLSession and Swift Result Type for Networking
 
 ## Dictionary API
