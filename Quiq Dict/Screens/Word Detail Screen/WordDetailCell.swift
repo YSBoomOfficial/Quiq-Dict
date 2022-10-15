@@ -116,7 +116,7 @@ extension WordDetailCell {
 		let textLabel = Label(attributedText: makeAttributedString(title: phonetic.audioAccentRegion ?? "", phonetics: phonetic.displayText))
 		phoneticHStack.addArrangedSubview(textLabel)
 
-		if !phonetic.audio.isEmpty {
+		if phonetic.audioURL != nil {
 			phoneticHStack.addArrangedSubview(makeAudioButton(withTag: index))
 		} else {
 			let audioUnavailableLabel = Label(text: "Audio Unavailable")
@@ -148,7 +148,7 @@ extension WordDetailCell {
 	}
 
 	@objc private func playAudio(_ sender: UIButton) {
-		service.fetchPhoneticsAudio(from: word.phonetics[sender.tag].audio) { [weak self] result in
+		service.fetchPhoneticsAudio(from: word.phonetics[sender.tag].audioURL!) { [weak self] result in
 			DispatchQueue.main.async {
 				switch result {
 					case let .success(data):

@@ -15,22 +15,16 @@ class WordListViewController: UIViewController {
 	private(set) var words = [Word]() {
 		didSet {
 			tableView.reloadSections(.init(integer: 0), with: .automatic)
-			if words.isEmpty {
-				navigationItem.leftBarButtonItem!.isEnabled = false
-			} else {
-				navigationItem.leftBarButtonItem!.isEnabled = true
-			}
 		}
 	}
 
-	private var audioService: PhoneticsAudioLoader
-	private var searchAction: (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void
-	private var saveAction: ((Word) -> Void)?
-	private var deleteAction: ((Word) -> Void)?
+	private let searchAction: (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void
+	private let didSelectWord: (Word) -> UIViewController
+	private let onSave: (Word) -> Void
+	private let onDelete: (Word) -> Void
 
 	private var searchTerm = ""
 	private var cancellable: AnyCancellable?
-
 	private(set) var isRefreshing = false {
 		didSet {
 			DispatchQueue.main.async { [weak self] in
@@ -49,17 +43,17 @@ class WordListViewController: UIViewController {
 	}
 
 	init(
-		words: [Word] = [],
-		audioService: PhoneticsAudioLoader,
+		words: [Word],
 		searchAction: @escaping (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void,
-		saveAction: ((Word) -> Void)? = nil,
-		deleteAction: ((Word) -> Void)? = nil
+		didSelectWord: @escaping (Word) -> UIViewController,
+		onSave: @escaping (Word) -> Void,
+		onDelete: @escaping (Word) -> Void
 	) {
 		self.words = words
-		self.audioService = audioService
 		self.searchAction = searchAction
-		self.saveAction = saveAction
-		self.deleteAction = deleteAction
+		self.didSelectWord = didSelectWord
+		self.onSave = onSave
+		self.onDelete = onDelete
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -68,10 +62,7 @@ class WordListViewController: UIViewController {
 
 		view.backgroundColor = .systemBackground
 		navigationController?.navigationBar.prefersLargeTitles = true
-		title = "Quiq Dict"
-
-		navigationItem.leftBarButtonItem = .init(title: "Clear", style: .done, target: self, action: #selector(clearTapped))
-		navigationItem.leftBarButtonItem!.isEnabled = false
+		navigationItem.title = "Quiq Dict"
 
 		setupTableView()
 		setupSearchController()
@@ -129,18 +120,17 @@ extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		show(WordDetailViewController(word: words[indexPath.row], audioService: audioService), sender: self)
+		show(didSelectWord(words[indexPath.row]), sender: self)
 	}
 
 	// MARK: Cell Swipe Action Methods
 	func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		guard let save = saveAction else { return nil }
 		let saveAction = UIContextualAction(style: .normal, title: "Save") { [weak self] saveAction, view, completion in
 			guard let self else {
 				completion(false)
 				return
 			}
-			save(self.words[indexPath.row])
+			self.onSave(self.words[indexPath.row])
 			completion(true)
 		}
 
@@ -151,13 +141,13 @@ extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
 	}
 
 	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		guard let delete = deleteAction else { return nil }
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] action, view, completion in
 			guard let self else {
 				completion(false)
 				return
 			}
-			delete(self.words[indexPath.row])
+			self.onDelete(self.words[indexPath.row])
+			self.words.remove(at: indexPath.row)
 			completion(true)
 		}
 
@@ -202,10 +192,5 @@ extension WordListViewController {
 				}
 			}
 		}
-	}
-
-	@objc private func clearTapped(_ sender: UIBarButtonItem) {
-		words = []
-		sender.isEnabled = false
 	}
 }

@@ -19,41 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window?.makeKeyAndVisible()
 	}
 
-	private func makeRootVC() -> UITabBarController {
-		// MARK: Remote Data Loader VC
-		let wordListVCLoadsRemoteData = WordListViewController(
-			audioService: RemotePhoneticsAudioLoader.shared,
-			searchAction: RemoteWordsLoader.shared.fetchDefinitions,
-			saveAction: { word in
-				print("Save \(word) triggered")
-				// DataManager.shared.add(word: word)
-			},
-			deleteAction: nil // No Delete action for Remote Loaders
-		)
-		
-		wordListVCLoadsRemoteData.tabBarItem = .init(title: "Search", image: .init(systemName: "magnifyingglass"), tag: 0)
-
-		// MARK: Local Data Loader VC
-		let wordListVCLoadsLocalData = WordListViewController(
-			audioService: LocalPhoneticsAudioLoader.shared,
-			searchAction: LocalWordsLoader.shared.fetchDefinitions,
-			saveAction: nil, // No Save action for Local Loaders
-			deleteAction: { word in
-				print("Remove \(word) triggered")
-				// DataManager.shared.remove(word: word)
-			}
-		)
-		
-		wordListVCLoadsLocalData.tabBarItem = .init(title: "Saved", image: .init(systemName: "archivebox"), tag: 1)
-
-		let tabBarVC = UITabBarController()
-		tabBarVC.viewControllers = [
-			UINavigationController(rootViewController: wordListVCLoadsRemoteData),
-			UINavigationController(rootViewController: wordListVCLoadsLocalData),
-		]
-		return tabBarVC
-	}
-
 	func sceneDidDisconnect(_ scene: UIScene) {
 		// Called as the scene is being released by the system.
 		// This occurs shortly after the scene enters the background, or when its session is discarded.
@@ -81,7 +46,55 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// Use this method to save data, release shared resources, and store enough scene-specific state information
 		// to restore the scene back to its current state.
 	}
-
-
 }
 
+fileprivate extension SceneDelegate {
+
+	// MARK: Make WordListViewController that loads remote data
+	private func makeWordListVCLoadsRemoteData() -> WordListViewController {
+		WordListViewController(
+			words: [],
+			searchAction: RemoteWordsLoader.shared.fetchDefinitions,
+			didSelectWord: { word in
+				WordDetailViewController(word: word, audioService: RemotePhoneticsAudioLoader.shared)
+			},
+			onSave: DataManager.shared.add,
+			onDelete: { _ in
+				// No Delete action for Remote Loaders
+			}
+		)
+
+	}
+
+	// MARK: Make WordListViewController that loads local data
+	private func makeWordListVCLoadsLocalData() -> WordListViewController {
+		WordListViewController(
+			words: DataManager.shared.words,
+			searchAction: LocalWordsLoader.shared.fetchDefinitions,
+			didSelectWord: { word in
+				WordDetailViewController(word: word, audioService: LocalPhoneticsAudioLoader.shared)
+			},
+			onSave: { _ in
+				// No Save action for Local Loaders
+			},
+			onDelete: DataManager.shared.remove
+		)
+	}
+
+	// MARK: Root TabBarController
+	private func makeRootVC() -> UITabBarController {
+		let wordListVCLoadsRemoteData = makeWordListVCLoadsRemoteData()
+		wordListVCLoadsRemoteData.tabBarItem = .init(title: "Search", image: .init(systemName: "magnifyingglass"), tag: 0)
+
+		let wordListVCLoadsLocalData = makeWordListVCLoadsLocalData()
+		wordListVCLoadsLocalData.tabBarItem = .init(title: "Saved", image: .init(systemName: "archivebox"), tag: 1)
+
+
+		let tabBarVC = UITabBarController()
+		tabBarVC.viewControllers = [
+			UINavigationController(rootViewController: wordListVCLoadsRemoteData),
+			UINavigationController(rootViewController: wordListVCLoadsLocalData),
+		]
+		return tabBarVC
+	}
+}
