@@ -18,35 +18,38 @@ final class DataManager: DataManaging {
 
 	init(phoneticsLoader: PhoneticsAudioLoader) {
 		self.phoneticsLoader = phoneticsLoader
+		print("\n💻 - DataManager - init - \(wordsSavePath)\n")
 		load()
 	}
 
 	// MARK: Load & Save
 	private func load() {
 		do {
-			let data = try Data(contentsOf: wordsSavePath)
+			let data = FileManager.default.contents(atPath: wordsSavePath.absoluteString) ?? Data()
 			words = try JSONDecoder().decode([Word].self, from: data)
-			print("DataManager - load() - Successful")
+			print("\n💻 - DataManager - load() - Successful\n")
 		} catch {
 			words = []
-			print("DataManager - load() - \(error)")
+			print("\n💻 - DataManager - load() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 		}
 
-		print("words.count = \(words.count)")
-		words.forEach { print($0.word) }
+		print("\n💻 - words.count = \(words.count)\n")
+		words.forEach { print(" - \($0.title)") }
+		print("\n")
 	}
 
 	private func save() {
 		do {
 			let data = try JSONEncoder().encode(words)
 			try data.write(to: wordsSavePath, options: [.atomic, .completeFileProtection])
-			print("DataManager - save() - Successful")
+			print("\n💻 - DataManager - save() - Successful\n")
 		} catch {
-			print("DataManager - save() - \(error)")
+			print("\n💻 - DataManager - save() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 		}
 
-		print("words.count = \(words.count)")
-		words.forEach { print($0.word) }
+		print("\n💻 - words.count = \(words.count)\n")
+		words.forEach { print(" - \($0.title)") }
+		print("\n")
 	}
 
 	// MARK: Word - Add, Remove and Search operations
@@ -59,6 +62,7 @@ final class DataManager: DataManaging {
 
 	func remove(word: Word) {
 		words.removeAll { $0 == word }
+		removeAudio(for: word.phonetics)
 		save()
 	}
 
@@ -69,17 +73,19 @@ final class DataManager: DataManaging {
 	// MARK: [Word.Phonetic] - Add, Remove and Search operations
 	private func addAudio(for phonetics: [Word.Phonetic]) {
 		for phon in phonetics {
-			phoneticsLoader.fetchPhoneticsAudio(from: phon.audio) { result in
-				switch result {
-					case .success(let data):
-						do {
-							let path = FileManager.documentsDirectory.appendingPathComponent(phon.audio)
-							try data.write(to: path, options: [.atomic, .completeFileProtection])
-						} catch {
-							print("DataManager - addAudio() - \(error)")
-						}
-					case .failure(let failure):
-						print("DataManager - addAudio() - \(failure)")
+			if let url = phon.audioURL, let filename = phon.filename {
+				phoneticsLoader.fetchPhoneticsAudio(from: url) { result in
+					switch result {
+						case .success(let data):
+							do {
+								let path = FileManager.documentsDirectory.appendingPathComponent(filename)
+								try data.write(to: path, options: [.atomic, .completeFileProtection])
+							} catch {
+								print("\n💻 - DataManager - addAudio() - result.success - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
+							}
+						case .failure(let error):
+							print("\n💻 - DataManager - addAudio() - result.failure - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
+					}
 				}
 			}
 		}
@@ -87,21 +93,19 @@ final class DataManager: DataManaging {
 
 	private func removeAudio(for phonetics: [Word.Phonetic]) {
 		for phon in phonetics {
-
-			do {
-				let path = FileManager.documentsDirectory.appendingPathComponent(phon.audio)
-				try FileManager.default.removeItem(atPath: path.absoluteString)
-			} catch {
-				print("DataManager - addAudio() - \(error)")
+			if let filename = phon.filename {
+				do {
+					let path = FileManager.documentsDirectory.appendingPathComponent(filename)
+					try FileManager.default.removeItem(atPath: path.absoluteString)
+				} catch {
+					print("\n💻 - DataManager - addAudio() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
+				}
 			}
 		}
 	}
 
 	func audio(for wordUrlString: String) -> Data? {
-		try? Data(
-			contentsOf: FileManager
-				.documentsDirectory
-				.appendingPathComponent(wordUrlString)
-		)
+		guard let filename = wordUrlString.components(separatedBy: "/").last?.replacingOccurrences(of: ".mp3", with: "") else { return nil }
+		return FileManager.default.contents(atPath: filename)
 	}
 }
