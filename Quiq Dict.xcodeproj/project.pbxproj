@@ -17,6 +17,7 @@
 		D3226B372898B16D00DA964A /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B362898B16D00DA964A /* Word.swift */; };
 		D3226B3D2898B44600DA964A /* UIViewController+ShowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */; };
 		D3226B3F2898B73600DA964A /* WordsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B3E2898B73600DA964A /* WordsLoader.swift */; };
+		D3401CB528FB62590044DB49 /* Word+Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3401CB428FB62590044DB49 /* Word+Example.swift */; };
 		D34EBDA928995E5200B41361 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34EBDA828995E5200B41361 /* NetworkError.swift */; };
 		D35F8CD528EB5294007841FC /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F8CD428EB5294007841FC /* DataManager.swift */; };
 		D35F8CD728EB52D3007841FC /* FileManager+documentsDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F8CD628EB52D2007841FC /* FileManager+documentsDirectory.swift */; };
@@ -45,6 +46,7 @@
 		D3226B362898B16D00DA964A /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ShowError.swift"; sourceTree = "<group>"; };
 		D3226B3E2898B73600DA964A /* WordsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsLoader.swift; sourceTree = "<group>"; };
+		D3401CB428FB62590044DB49 /* Word+Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Word+Example.swift"; sourceTree = "<group>"; };
 		D34EBDA828995E5200B41361 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D35F8CD428EB5294007841FC /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		D35F8CD628EB52D2007841FC /* FileManager+documentsDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+documentsDirectory.swift"; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				D3226B362898B16D00DA964A /* Word.swift */,
+				D3401CB428FB62590044DB49 /* Word+Example.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				D395340928B001440072A52C /* makeAttributedString.swift in Sources */,
 				D3F1F58828B936F100EA5330 /* WordDetailViewController.swift in Sources */,
 				D35F8CE128EB64EE007841FC /* LocalWordsLoader.swift in Sources */,
+				D3401CB528FB62590044DB49 /* Word+Example.swift in Sources */,
 				D35F8CDC28EB64A2007841FC /* LocalPhoneticsAudioLoader.swift in Sources */,
 				D35F8CD728EB52D3007841FC /* FileManager+documentsDirectory.swift in Sources */,
 				D30EF9D928AF2128005C1358 /* WordCell.swift in Sources */,
