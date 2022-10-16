@@ -8,7 +8,6 @@
 import Foundation
 
 final class LocalWordsLoader: WordsLoader {
-	static let shared = LocalWordsLoader(dataManager: DataManager.shared)
 	private let dataManager: DataManaging
 
 	init(dataManager: DataManaging) {

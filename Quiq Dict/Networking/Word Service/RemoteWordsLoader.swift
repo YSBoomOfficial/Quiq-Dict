@@ -11,10 +11,9 @@ import Foundation
 // Endpoint - https://api.dictionaryapi.dev/api/v2/entries/en/<word>
 
 final class RemoteWordsLoader: WordsLoader {
-	static let shared = RemoteWordsLoader(session: .shared)
 	private let session: URLSession
 
-	init(session: URLSession) {
+	init(session: URLSession = .shared) {
 		self.session = session
 	}
 

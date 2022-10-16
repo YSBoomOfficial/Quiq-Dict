@@ -8,7 +8,6 @@
 import Foundation
 
 final class LocalPhoneticsAudioLoader: PhoneticsAudioLoader {
-	static let shared = LocalPhoneticsAudioLoader(dataManager: DataManager.shared)
 	private let dataManager: DataManaging
 
 	init(dataManager: DataManaging) {

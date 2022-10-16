@@ -49,46 +49,54 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 fileprivate extension SceneDelegate {
-
 	// MARK: Make WordListViewController that loads remote data
-	private func makeWordListVCLoadsRemoteData() -> WordListViewController {
+	private func makeWordListVCLoadsRemoteData(wordsLoader: WordsLoader, phoneticsLoader: PhoneticsAudioLoader, dataManager: DataManaging) -> WordListViewController {
 		WordListViewController(
 			words: [],
-			searchAction: RemoteWordsLoader.shared.fetchDefinitions,
+			searchAction: wordsLoader.fetchDefinitions,
 			didSelectWord: { word in
-				WordDetailViewController(word: word, audioService: RemotePhoneticsAudioLoader.shared)
+				WordDetailViewController(word: word, audioService: phoneticsLoader)
 			},
-			onSave: DataManager.shared.add,
+			onSave: dataManager.add,
 			onDelete: { _ in
 				// No Delete action for Remote Loaders
 			}
 		)
-
 	}
 
 	// MARK: Make WordListViewController that loads local data
-	private func makeWordListVCLoadsLocalData() -> WordListViewController {
+	private func makeWordListVCLoadsLocalData(loader: WordsLoader, phoneticsLoader: PhoneticsAudioLoader, dataManager: DataManaging) -> WordListViewController {
 		WordListViewController(
-			words: DataManager.shared.words,
-			searchAction: LocalWordsLoader.shared.fetchDefinitions,
+			words: dataManager.words,
+			searchAction: loader.fetchDefinitions,
 			didSelectWord: { word in
-				WordDetailViewController(word: word, audioService: LocalPhoneticsAudioLoader.shared)
+				WordDetailViewController(word: word, audioService: phoneticsLoader)
 			},
 			onSave: { _ in
 				// No Save action for Local Loaders
 			},
-			onDelete: DataManager.shared.remove
+			onDelete: dataManager.remove
 		)
 	}
 
 	// MARK: Root TabBarController
 	private func makeRootVC() -> UITabBarController {
-		let wordListVCLoadsRemoteData = makeWordListVCLoadsRemoteData()
+		let remotePhoneticsLoader = RemotePhoneticsAudioLoader()
+		let dataManager = DataManager(phoneticsLoader: remotePhoneticsLoader)
+
+		let wordListVCLoadsRemoteData = makeWordListVCLoadsRemoteData(
+			wordsLoader: RemoteWordsLoader(),
+			phoneticsLoader: remotePhoneticsLoader,
+			dataManager: dataManager
+		)
 		wordListVCLoadsRemoteData.tabBarItem = .init(title: "Search", image: .init(systemName: "magnifyingglass"), tag: 0)
 
-		let wordListVCLoadsLocalData = makeWordListVCLoadsLocalData()
+		let wordListVCLoadsLocalData = makeWordListVCLoadsLocalData(
+			loader: LocalWordsLoader(dataManager: dataManager),
+			phoneticsLoader: LocalPhoneticsAudioLoader(dataManager: dataManager),
+			dataManager: dataManager
+		)
 		wordListVCLoadsLocalData.tabBarItem = .init(title: "Saved", image: .init(systemName: "archivebox"), tag: 1)
-
 
 		let tabBarVC = UITabBarController()
 		tabBarVC.viewControllers = [

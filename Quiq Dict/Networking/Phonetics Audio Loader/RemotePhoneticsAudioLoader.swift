@@ -8,10 +8,9 @@
 import Foundation
 
 final class RemotePhoneticsAudioLoader: PhoneticsAudioLoader {
-	static let shared = RemotePhoneticsAudioLoader(session: .shared)
 	private let session: URLSession
 
-	init(session: URLSession) {
+	init(session: URLSession = .shared) {
 		self.session = session
 	}
 

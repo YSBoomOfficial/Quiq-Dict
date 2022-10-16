@@ -8,7 +8,6 @@
 import Foundation
 
 final class DataManager: DataManaging {
-	static let shared = DataManager(phoneticsLoader: RemotePhoneticsAudioLoader.shared)
 	private let wordsSavePath = FileManager.documentsDirectory.appendingPathComponent("SavedWords")
 
 	private let phoneticsLoader: PhoneticsAudioLoader
