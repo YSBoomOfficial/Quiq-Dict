@@ -23,26 +23,30 @@ final class RemoteWordsLoader: WordsLoader {
 			return
 		}
 
-		session.dataTask(with: url) { data, response, error in
-			if let error = error {
-				completion(.failure(.other(error)))
-				return
-			}
+        session.dataTask(with: url) { data, response, error in
+            if let error {
+                completion(.failure(.other(error)))
+                return
+            }
 
-			guard let status = (response as? HTTPURLResponse), 200...299 ~= status.statusCode else {
-				completion(.failure(.badResponse((response as? HTTPURLResponse)?.statusCode ?? -1))); return
-			}
+            guard let status = (response as? HTTPURLResponse), 200...299 ~= status.statusCode else {
+                completion(.failure(.badResponse((response as? HTTPURLResponse)?.statusCode ?? -1)))
+                return
+            }
 
-			if let data = data {
-				do {
-					let decoded = try JSONDecoder().decode([Word].self, from: data)
-					completion(.success(decoded))
-					return
-				} catch {
-					completion(.failure(.decodingError))
-					return
-				}
-			}
-		}.resume()
+            guard let data else {
+                completion(.failure(.badResponse(404)))
+                return
+            }
+
+            do {
+                let decoded = try JSONDecoder().decode([Word].self, from: data)
+                completion(.success(decoded))
+                return
+            } catch {
+                completion(.failure(.decodingError))
+                return
+            }
+        }.resume()
 	}
 }

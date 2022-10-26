@@ -54,16 +54,14 @@ extension Word {
 	}
 
 	var firstMeaning: String {
-		guard !meanings.isEmpty,
-			  let meaning = meanings.first(where: { !$0.definitions.isEmpty }),
-			  !meaning.definitions.isEmpty,
-			  let definition = meaning.definitions.first(where: { $0.definition != "" })?.definition else { return "No Definition found" }
+        guard let meaning = meanings.first(where: { !$0.definitions.isEmpty }),
+              let definition = meaning.definitions.first(where: { !$0.definition.isEmpty })?.definition else { return "No Definition found" }
 		return definition
 	}
 
 	var phoneticText: String {
 		if let phonetic { return phonetic }
-		guard !phonetics.isEmpty, let phon = phonetics.first(where: { $0.text != nil }) else { return "N/a" }
+		guard let phon = phonetics.first(where: { $0.text != nil }) else { return "N/a" }
 		return phon.text!
 	}
 }

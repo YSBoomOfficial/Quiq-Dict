@@ -21,7 +21,7 @@ final class RemotePhoneticsAudioLoader: PhoneticsAudioLoader {
 		}
 
 		session.dataTask(with: url) { data, response, error in
-			if let error = error {
+			if let error {
 				completion(.failure(.other(error)))
 				return
 			}
@@ -31,10 +31,12 @@ final class RemotePhoneticsAudioLoader: PhoneticsAudioLoader {
 				return
 			}
 
-			if let data = data {
-				completion(.success(data))
-				return
-			}
+            guard let data else {
+                completion(.failure(.badResponse(404)))
+                return
+            }
+
+            completion(.success(data))
 		}.resume()
 	}
 }

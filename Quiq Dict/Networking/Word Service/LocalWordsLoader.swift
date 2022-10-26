@@ -15,6 +15,11 @@ final class LocalWordsLoader: WordsLoader {
 	}
 
 	func fetchDefinitions(for word: String, completion: @escaping (Result<[Word], NetworkError>) -> Void) {
-		completion(.success(dataManager.search(for: word)))
+        let words = dataManager.search(for: word)
+        if word.isEmpty {
+            completion(.failure(.badResponse(404)))
+        } else {
+            completion(.success(words))
+        }
 	}
 }
