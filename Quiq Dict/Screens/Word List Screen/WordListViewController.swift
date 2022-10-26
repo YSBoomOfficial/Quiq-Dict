@@ -12,11 +12,7 @@ class WordListViewController: UIViewController {
 	private let searchController = UISearchController(searchResultsController: nil)
 	private let tableView = UITableView(frame: .zero, style: .insetGrouped)
 
-	private(set) var words = [Word]() {
-		didSet {
-			tableView.reloadSections(.init(integer: 0), with: .automatic)
-		}
-	}
+    private let dataSource: WordListDataSource
 
 	private let searchAction: (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void
 	private let didSelectWord: (Word) -> UIViewController
@@ -43,13 +39,13 @@ class WordListViewController: UIViewController {
 	}
 
 	init(
-		words: [Word],
+        dataSource: WordListDataSource,
 		searchAction: @escaping (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void,
 		didSelectWord: @escaping (Word) -> UIViewController,
 		onSave: @escaping (Word) -> Void,
 		onDelete: @escaping (Word) -> Void
 	) {
-		self.words = words
+		self.dataSource = dataSource
 		self.searchAction = searchAction
 		self.didSelectWord = didSelectWord
 		self.onSave = onSave
@@ -74,7 +70,7 @@ extension WordListViewController {
 	private func setupTableView() {
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.register(WordCell.self, forCellReuseIdentifier: WordCell.reuseID)
-		tableView.dataSource = self
+		tableView.dataSource = dataSource
 		tableView.delegate = self
 
 		tableView.refreshControl = .init()
@@ -104,33 +100,19 @@ extension WordListViewController {
 }
 
 // MARK: UITableViewControllerDataSource & UITableViewControllerDelegate
-extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
-	// MARK: Required Data Source & Delegate Methods
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		words.count
-	}
-
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: WordCell.reuseID, for: indexPath) as? WordCell else {
-			fatalError("Could not dequeue WordCell")
-		}
-		cell.configure(with: words[indexPath.row])
-		return cell
-	}
-
+extension WordListViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		show(didSelectWord(words[indexPath.row]), sender: self)
+        let word = self.dataSource.word(at: indexPath.row)
+		show(didSelectWord(word), sender: self)
 	}
 
 	// MARK: Cell Swipe Action Methods
 	func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let saveAction = UIContextualAction(style: .normal, title: "Save") { [weak self] saveAction, view, completion in
-			guard let self else {
-				completion(false)
-				return
-			}
-			self.onSave(self.words[indexPath.row])
+			guard let self else { completion(false); return }
+            let word = self.dataSource.word(at: indexPath.row)
+			self.onSave(word)
 			completion(true)
 		}
 
@@ -142,12 +124,11 @@ extension WordListViewController: UITableViewDataSource, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] action, view, completion in
-			guard let self else {
-				completion(false)
-				return
-			}
-			self.onDelete(self.words[indexPath.row])
-			self.words.remove(at: indexPath.row)
+			guard let self else { completion(false); return }
+
+            let word = self.dataSource.word(at: indexPath.row)
+			self.onDelete(word)
+            self.dataSource.removeWord(at: indexPath.row)
 			completion(true)
 		}
 
@@ -170,7 +151,8 @@ extension WordListViewController {
 			self.isRefreshing = false
 			switch result {
 				case .success(let words):
-					self.words = words
+                    words.forEach(self.dataSource.addWord)
+                    self.tableView.reloadSections(.init(integer: 0), with: .automatic)
 				case .failure(let error):
 					self.showAlert(withError: error)
 			}

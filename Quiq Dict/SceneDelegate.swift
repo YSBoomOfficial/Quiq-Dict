@@ -52,7 +52,7 @@ fileprivate extension SceneDelegate {
 	// MARK: Make WordListViewController that loads remote data
 	private func makeWordListVCLoadsRemoteData(wordsLoader: WordsLoader, phoneticsLoader: PhoneticsAudioLoader, dataManager: DataManaging) -> WordListViewController {
 		WordListViewController(
-			words: [],
+            dataSource: WordListDataSource(),
 			searchAction: wordsLoader.fetchDefinitions,
 			didSelectWord: { word in
 				WordDetailViewController(word: word, audioService: phoneticsLoader)
@@ -67,7 +67,7 @@ fileprivate extension SceneDelegate {
 	// MARK: Make WordListViewController that loads local data
 	private func makeWordListVCLoadsLocalData(loader: WordsLoader, phoneticsLoader: PhoneticsAudioLoader, dataManager: DataManaging) -> WordListViewController {
 		WordListViewController(
-			words: dataManager.words,
+            dataSource: WordListDataSource(words: dataManager.words),
 			searchAction: loader.fetchDefinitions,
 			didSelectWord: { word in
 				WordDetailViewController(word: word, audioService: phoneticsLoader)
