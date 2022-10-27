@@ -109,7 +109,7 @@ extension WordListViewController: UITableViewDelegate {
 
 	// MARK: Cell Swipe Action Methods
 	func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-		let saveAction = UIContextualAction(style: .normal, title: "Save") { [weak self] saveAction, view, completion in
+		let saveAction = UIContextualAction(style: .normal, title: "Save") { [weak self] action, view, completion in
 			guard let self else { completion(false); return }
             let word = self.dataSource.word(at: indexPath.row)
 			self.onSave(word)

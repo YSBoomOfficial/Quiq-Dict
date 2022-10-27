@@ -7,18 +7,6 @@
 
 import UIKit
 
-extension UILabel {
-	@objc convenience init(text: String) {
-		self.init()
-		self.text = text
-	}
-
-	@objc convenience init(attributedText: NSAttributedString) {
-		self.init()
-		self.attributedText = attributedText
-	}
-}
-
 class Label: UILabel {
 	var topInset: CGFloat
 	var bottomInset: CGFloat
