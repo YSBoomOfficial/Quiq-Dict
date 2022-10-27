@@ -8,7 +8,7 @@
 import Foundation
 
 final class DataManager: DataManaging {
-	private let wordsSavePath = FileManager.documentsDirectory.appendingPathComponent("SavedWords")
+	private let wordsSavePath = FileManager.documentsDirectory.appendingPathComponent("SavedWords.json")
 
 	private let phoneticsLoader: PhoneticsAudioLoader
 
@@ -24,7 +24,7 @@ final class DataManager: DataManaging {
 	// MARK: Load & Save
 	private func load() {
 		do {
-			let data = FileManager.default.contents(atPath: wordsSavePath.absoluteString) ?? Data()
+            let data = try Data(contentsOf: wordsSavePath)
 			words = try JSONDecoder().decode([Word].self, from: data)
 			print("\n💻 - DataManager - load() - Successful\n")
 		} catch {
@@ -37,6 +37,7 @@ final class DataManager: DataManaging {
 		print("\n")
 	}
 
+    #warning("Local Saving now works but only shows up in the tableview when you relaunch the app")
 	private func save() {
 		do {
 			let data = try JSONEncoder().encode(words)
@@ -55,14 +56,14 @@ final class DataManager: DataManaging {
 	func add(word: Word) {
 		guard !words.contains(word) else { return }
 		words.append(word)
-		addAudio(for: word.phonetics)
-		save()
+        save()
+        addAudio(for: word.phonetics)
 	}
 
 	func remove(word: Word) {
 		words.removeAll { $0 == word }
-		removeAudio(for: word.phonetics)
-		save()
+        save()
+        removeAudio(for: word.phonetics)
 	}
 
 	func search(for word: String) -> [Word] {
@@ -104,7 +105,8 @@ final class DataManager: DataManaging {
 	}
 
 	func audio(for wordUrlString: String) -> Data? {
-		guard let filename = wordUrlString.components(separatedBy: "/").last?.replacingOccurrences(of: ".mp3", with: "") else { return nil }
-		return FileManager.default.contents(atPath: filename)
+		guard let filename = wordUrlString.components(separatedBy: "/").last else { return nil }
+        let path = FileManager.documentsDirectory.appendingPathComponent(filename)
+		return try? Data(contentsOf: path)
 	}
 }

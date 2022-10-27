@@ -18,12 +18,16 @@ final class WordListDataSource: NSObject {
         words[index]
     }
 
-    func addWord(_ word: Word) {
-        words.append(word)
+    func updateDataSource(with words: [Word]) {
+        self.words = words
     }
 
     func removeWord(at index: Int) {
         words.remove(at: index)
+    }
+
+    func removeAllWords() {
+        words = []
     }
 
 }

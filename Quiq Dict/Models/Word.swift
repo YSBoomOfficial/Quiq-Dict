@@ -73,7 +73,7 @@ extension Word.Phonetic {
 	}
 
 	var filename: String? {
-		audioURL?.components(separatedBy: "/").last?.replacingOccurrences(of: ".mp3", with: "")
+		audioURL?.components(separatedBy: "/").last
 	}
 
 	var audioAccentRegion: String? {

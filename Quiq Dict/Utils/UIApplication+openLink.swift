@@ -14,13 +14,13 @@ extension UIApplication {
 
 	func open(link: URL) {
 		if canOpenURL(link) {
-			open(link) { success in
-                if success { return }
+			open(link) { [weak self] success in
+                if !success {
+                    self?.rootViewController?.showAlert(title: "Something went wrong", message: "Could not open link")
+                }
 			}
-		}
-
-        if let controller = rootViewController {
-            controller.showAlert(title: "Something went wrong", message: "Could not open link")
+        } else {
+            rootViewController?.showAlert(title: "Something went wrong", message: "Could not open link")
         }
 	}
 }

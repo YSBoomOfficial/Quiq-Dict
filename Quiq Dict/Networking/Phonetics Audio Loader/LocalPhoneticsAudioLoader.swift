@@ -15,9 +15,12 @@ final class LocalPhoneticsAudioLoader: PhoneticsAudioLoader {
 	}
 
 	func fetchPhoneticsAudio(from url: String, completion: @escaping (Result<Data, NetworkError>) -> Void) {
-		if let data = dataManager.audio(for: url) {
+        print("\n💻 - LocalPhoneticsAudioLoader - fetchPhoneticsAudio - \(url)\n")
+        if let data = dataManager.audio(for: url) {
+            print("\n💻 - LocalPhoneticsAudioLoader - fetchPhoneticsAudio - Has Data\n")
 			completion(.success(data))
 		} else {
+            print("\n💻 - LocalPhoneticsAudioLoader - fetchPhoneticsAudio - NO DATA\n")
 			completion(.failure(.badResponse(404)))
 		}
 	}
