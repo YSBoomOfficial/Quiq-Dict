@@ -28,11 +28,22 @@
 		D35F8CE128EB64EE007841FC /* LocalWordsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F8CE028EB64EE007841FC /* LocalWordsLoader.swift */; };
 		D395340928B001440072A52C /* makeAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340828B001440072A52C /* makeAttributedString.swift */; };
 		D395340B28B009E30072A52C /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340A28B009E30072A52C /* UILabel+Ext.swift */; };
+		D3CBA768290D988000C9C5F1 /* TestWordListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */; };
 		D3F1F58828B936F100EA5330 /* WordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58728B936F100EA5330 /* WordDetailViewController.swift */; };
 		D3F1F58C28B93B3A00EA5330 /* WordDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58B28B93B3A00EA5330 /* WordDetailCell.swift */; };
 		D3F1F58E28B9432700EA5330 /* UIApplication+openLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */; };
 		D3F8BC5328ECE86D00F74256 /* DataManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F8BC5228ECE86D00F74256 /* DataManaging.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D3CBA762290D97C200C9C5F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3226B172898B0F100DA964A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D3226B1E2898B0F100DA964A;
+			remoteInfo = "Quiq Dict";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		D30EF9D028AF1414005C1358 /* PhoneticsAudioLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneticsAudioLoader.swift; sourceTree = "<group>"; };
@@ -58,6 +69,8 @@
 		D35F8CE028EB64EE007841FC /* LocalWordsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalWordsLoader.swift; sourceTree = "<group>"; };
 		D395340828B001440072A52C /* makeAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = makeAttributedString.swift; sourceTree = "<group>"; };
 		D395340A28B009E30072A52C /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		D3CBA75C290D97C200C9C5F1 /* Quiq Dict UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Quiq Dict UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWordListScreen.swift; sourceTree = "<group>"; };
 		D3F1F58728B936F100EA5330 /* WordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailViewController.swift; sourceTree = "<group>"; };
 		D3F1F58B28B93B3A00EA5330 /* WordDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailCell.swift; sourceTree = "<group>"; };
 		D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+openLink.swift"; sourceTree = "<group>"; };
@@ -66,6 +79,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		D3226B1C2898B0F100DA964A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3CBA759290D97C200C9C5F1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -89,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				D3226B212898B0F100DA964A /* Quiq Dict */,
+				D3CBA75D290D97C200C9C5F1 /* Quiq Dict UITests */,
 				D3226B202898B0F100DA964A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				D3226B1F2898B0F100DA964A /* Quiq Dict.app */,
+				D3CBA75C290D97C200C9C5F1 /* Quiq Dict UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,6 +200,14 @@
 			path = "Word Service";
 			sourceTree = "<group>";
 		};
+		D3CBA75D290D97C200C9C5F1 /* Quiq Dict UITests */ = {
+			isa = PBXGroup;
+			children = (
+				D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */,
+			);
+			path = "Quiq Dict UITests";
+			sourceTree = "<group>";
+		};
 		D3F1F58928B936F600EA5330 /* Word Detail Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +246,24 @@
 			productReference = D3226B1F2898B0F100DA964A /* Quiq Dict.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D3CBA75B290D97C200C9C5F1 /* Quiq Dict UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D3CBA764290D97C200C9C5F1 /* Build configuration list for PBXNativeTarget "Quiq Dict UITests" */;
+			buildPhases = (
+				D3CBA758290D97C200C9C5F1 /* Sources */,
+				D3CBA759290D97C200C9C5F1 /* Frameworks */,
+				D3CBA75A290D97C200C9C5F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D3CBA763290D97C200C9C5F1 /* PBXTargetDependency */,
+			);
+			name = "Quiq Dict UITests";
+			productName = "Quiq Dict UITests";
+			productReference = D3CBA75C290D97C200C9C5F1 /* Quiq Dict UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -223,11 +271,16 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					D3226B1E2898B0F100DA964A = {
 						CreatedOnToolsVersion = 13.4.1;
+					};
+					D3CBA75B290D97C200C9C5F1 = {
+						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
+						TestTargetID = D3226B1E2898B0F100DA964A;
 					};
 				};
 			};
@@ -245,6 +298,7 @@
 			projectRoot = "";
 			targets = (
 				D3226B1E2898B0F100DA964A /* Quiq Dict */,
+				D3CBA75B290D97C200C9C5F1 /* Quiq Dict UITests */,
 			);
 		};
 /* End PBXProject section */
@@ -256,6 +310,13 @@
 			files = (
 				D3226B2F2898B0F300DA964A /* LaunchScreen.storyboard in Resources */,
 				D3226B2C2898B0F300DA964A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3CBA75A290D97C200C9C5F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +353,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D3CBA758290D97C200C9C5F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3CBA768290D988000C9C5F1 /* TestWordListScreen.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D3CBA763290D97C200C9C5F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D3226B1E2898B0F100DA964A /* Quiq Dict */;
+			targetProxy = D3CBA762290D97C200C9C5F1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D3226B2D2898B0F300DA964A /* LaunchScreen.storyboard */ = {
@@ -476,6 +553,57 @@
 			};
 			name = Release;
 		};
+		D3CBA765290D97C200C9C5F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HB73YMFXYF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.YSBoomOfficial.Quiq-Dict.Quiq-Dict-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Quiq Dict";
+			};
+			name = Debug;
+		};
+		D3CBA766290D97C200C9C5F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HB73YMFXYF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.YSBoomOfficial.Quiq-Dict.Quiq-Dict-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Quiq Dict";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -493,6 +621,15 @@
 			buildConfigurations = (
 				D3226B342898B0F300DA964A /* Debug */,
 				D3226B352898B0F300DA964A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D3CBA764290D97C200C9C5F1 /* Build configuration list for PBXNativeTarget "Quiq Dict UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3CBA765290D97C200C9C5F1 /* Debug */,
+				D3CBA766290D97C200C9C5F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

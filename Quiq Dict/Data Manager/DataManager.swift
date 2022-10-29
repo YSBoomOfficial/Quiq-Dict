@@ -37,7 +37,7 @@ final class DataManager: DataManaging {
 		print("\n")
 	}
 
-    #warning("Local Saving now works but only shows up in the tableview when you relaunch the app")
+    #warning("🔨 - Local Saving now works but only shows up in the tableview when you relaunch the app")
 	private func save() {
 		do {
 			let data = try JSONEncoder().encode(words)

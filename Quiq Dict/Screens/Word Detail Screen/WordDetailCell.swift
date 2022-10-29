@@ -224,7 +224,9 @@ extension WordDetailCell {
 		definitionVStack.spacing = 5
 
 		if !definition.definition.isEmpty {
-			definitionVStack.addArrangedSubview(Label(text: "- \(definition.definition)"))
+            let defLabel = Label(text: "- \(definition.definition)")
+            defLabel.accessibilityIdentifier = "definition_\(definition.definition)"
+			definitionVStack.addArrangedSubview(defLabel)
 		}
 
 		if !definition.synonyms.isEmpty {
@@ -238,7 +240,9 @@ extension WordDetailCell {
 		}
 
 		if let example = definition.example {
-			definitionVStack.addArrangedSubview(Label(text: "Example: \"\(example)\""))
+            let exLabel = Label(text: "Example: \"\(example)\"")
+            exLabel.accessibilityIdentifier = "example_\(example)"
+			definitionVStack.addArrangedSubview(exLabel)
 		}
 
 		return definitionVStack
@@ -270,6 +274,7 @@ extension WordDetailCell {
 		let attrString = NSAttributedString(string: url, attributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline), .link: url])
 		linkButton.setAttributedTitle(attrString, for: .normal)
 		linkButton.addTarget(self, action: #selector(linkTapped), for: .primaryActionTriggered)
+        linkButton.accessibilityIdentifier = "link_\(url)"
 		return linkButton
 	}
 
