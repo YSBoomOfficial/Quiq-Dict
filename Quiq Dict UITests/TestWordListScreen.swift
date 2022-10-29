@@ -6,6 +6,7 @@
 //
 
 import XCTest
+@testable import Quiq_Dict
 
 final class TestWordListScreen: XCTestCase {
     var app: XCUIApplication!
