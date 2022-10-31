@@ -37,8 +37,8 @@ final class TestWordListScreen: XCTestCase {
         let cellTitle = cells.containing(.staticText, identifier: "Hello /həˈləʊ/").element
         let cellSubtitle = cells.containing(.staticText, identifier: "\"Hello!\" or an equivalent greeting.").element
 
-        XCTAssert(cellTitle.exists)
-        XCTAssert(cellSubtitle.exists)
+        XCTAssert(cellTitle.exists, "Cell Title Should Appear")
+        XCTAssert(cellSubtitle.exists, "Cell Subtitle Should Appear")
 
     }
 
@@ -56,41 +56,41 @@ final class TestWordListScreen: XCTestCase {
         let table = app.tables
 
         // Title
-        XCTAssert(table.staticTexts["Hello /həˈləʊ/"].exists)
+        XCTAssert(table.staticTexts["Hello /həˈləʊ/"].exists, "Title Should Appear")
 
         // Headings
-        XCTAssert(table.staticTexts["Phonetics"].exists)
-        XCTAssert(table.staticTexts["Meanings"].exists)
-        XCTAssert(table.staticTexts["License: CC BY-SA 3.0"].exists)
-        XCTAssert(table.staticTexts["Source URLs"].exists)
+        XCTAssert(table.staticTexts["Phonetics"].exists, "Phonetics Heading Should Appear")
+        XCTAssert(table.staticTexts["Meanings"].exists, "Meanings Heading Should Appear")
+        XCTAssert(table.staticTexts["License: CC BY-SA 3.0"].exists, "License Heading Should Appear")
+        XCTAssert(table.staticTexts["Source URLs"].exists, "Source URLs Heading Should Appear")
 
         // Audio Title
-        XCTAssert(table.staticTexts["AU N/a"].exists)
-        XCTAssert(table.staticTexts["UK /həˈləʊ/"].exists)
-        XCTAssert(table.staticTexts["/həˈloʊ/"].exists)
-        XCTAssert(table.staticTexts["Audio Unavailable"].exists)
+        XCTAssert(table.staticTexts["AU N/a"].exists, "Audio Title AU Should Appear")
+        XCTAssert(table.staticTexts["UK /həˈləʊ/"].exists, "Audio Title UK Should Appear")
+        XCTAssert(table.staticTexts["/həˈloʊ/"].exists, "Audio Title Should Appear")
+        XCTAssert(table.staticTexts["Audio Unavailable"].exists, "Audio Unavailable Title Should Appear")
 
         // Audio Licences
-        XCTAssert(table.staticTexts["License: BY-SA 4.0"].exists)
-        XCTAssert(table.staticTexts["License: BY 3.0 US"].exists)
+        XCTAssert(table.staticTexts["License: BY-SA 4.0"].exists, "First Audio License Should Appear")
+        XCTAssert(table.staticTexts["License: BY 3.0 US"].exists, "Second Audio License Should Appear")
 
         // Audio Buttons
-        XCTAssertEqual(table.buttons.matching(identifier: "volume highest").count, 2)
+        XCTAssertEqual(table.buttons.matching(identifier: "volume highest").count, 2, "There Should be 2 Audio buttons")
 
         // Links
-        XCTAssertEqual(table.buttons.matching(.init(format: "identifier CONTAINS 'link_'")).count, 4)
+        XCTAssertEqual(table.buttons.matching(.init(format: "identifier CONTAINS 'link_'")).count, 4, "There shoudld be 4 links")
 
         // Subheadings
-        XCTAssert(table.staticTexts["Part of Speech: Noun"].exists)
-        XCTAssert(table.staticTexts["Part of Speech: Verb"].exists)
-        XCTAssert(table.staticTexts["Part of Speech: Interjection"].exists)
+        XCTAssert(table.staticTexts["Part of Speech: Noun"].exists, "Part of Speech: Noun Should Appear")
+        XCTAssert(table.staticTexts["Part of Speech: Verb"].exists, "Part of Speech: Verb Should Appear")
+        XCTAssert(table.staticTexts["Part of Speech: Interjection"].exists, "Part of Speech: Interjection Should Appear")
         XCTAssertEqual(table.cells.staticTexts.matching(identifier: "Definitions:").count, 3)
-        XCTAssert(table.staticTexts["General Synonyms:"].exists)
-        XCTAssert(table.staticTexts["General Antonyms:"].exists)
+        XCTAssert(table.staticTexts["General Synonyms:"].exists, "General Synonyms Should Appear")
+        XCTAssert(table.staticTexts["General Antonyms:"].exists, "General Antonyms Should Appear")
 
         // Definition (-) and Examples (Example:)
-        XCTAssertEqual(table.staticTexts.matching(.init(format: "identifier CONTAINS 'definition_'")).count, 7)
-        XCTAssertEqual(table.staticTexts.matching(.init(format: "identifier CONTAINS 'example_'")).count, 5)
+        XCTAssertEqual(table.staticTexts.matching(.init(format: "identifier CONTAINS 'definition_'")).count, 7, "There shoudld be 7 definition texts")
+        XCTAssertEqual(table.staticTexts.matching(.init(format: "identifier CONTAINS 'example_'")).count, 5, "There shoudld be 5 example texts")
 
     }
 
