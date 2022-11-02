@@ -26,7 +26,18 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D3226B1E2898B0F100DA964A"
+            BuildableName = "Quiq Dict.app"
+            BlueprintName = "Quiq Dict"
+            ReferencedContainer = "container:Quiq Dict.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO"
@@ -37,6 +48,18 @@
                BlueprintIdentifier = "D3CBA75B290D97C200C9C5F1"
                BuildableName = "Quiq Dict UITests.xctest"
                BlueprintName = "Quiq Dict UITests"
+               ReferencedContainer = "container:Quiq Dict.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D3808135291200690078C1F7"
+               BuildableName = "Quiq Dict Tests.xctest"
+               BlueprintName = "Quiq Dict Tests"
                ReferencedContainer = "container:Quiq Dict.xcodeproj">
             </BuildableReference>
          </TestableReference>
