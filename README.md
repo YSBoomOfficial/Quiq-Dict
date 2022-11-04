@@ -4,12 +4,12 @@ A Minimal Dictionary App built with UIKit
 ## Screenshots
 | Search Screen | Detail Screen |
 | --- | --- |
-| ![You Win](https://github.com/YSBoomOfficial/Quiq-Dict/blob/main/App%20Screenshots/SearchHello.png) | ![You Win](https://github.com/YSBoomOfficial/Quiq-Dict/blob/main/App%20Screenshots/HelloDetail.png) |
+| ![Search Screen](https://github.com/YSBoomOfficial/Quiq-Dict/blob/main/App%20Screenshots/SearchHello.png) | ![Detail Screen](https://github.com/YSBoomOfficial/Quiq-Dict/blob/main/App%20Screenshots/HelloDetail.png) |
 
 ## Dictionary API
 For more information about the API used in this app see [dictionaryapi.dev](https://dictionaryapi.dev/)
 
-## Additional Info and Notes to self
+## Additional Info
 ### How was it built?
 - UIKit (Programatic UI with AutoLayout)
 - MVC Architecture
