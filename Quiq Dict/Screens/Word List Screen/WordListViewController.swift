@@ -12,28 +12,33 @@ class WordListViewController: UIViewController {
 	private let searchController = UISearchController(searchResultsController: nil)
 	private let tableView = UITableView(frame: .zero, style: .insetGrouped)
 
-    private let dataSource: WordListDataSource
-	private let searchAction: (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void
-	private let didSelectWord: (Word) -> UIViewController
-	private let onSave: (Word) -> Void
-	private let onDelete: (Word) -> Void
+    typealias SearchAction = (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void
 
-	private var cancellable: AnyCancellable?
+    private let dataSource: WordListDataSource
+	private let searchAction: SearchAction?
+    private let onSave: ((Int) -> Void)?
+    private let onDelete: ((Int) -> Void)?
+
+    var didSelectWord: ((Int) -> Void)!
+
+    private var cancellable: AnyCancellable?
 
 	required init?(coder: NSCoder) {
 		fatalError("init?(coder: NSCoder) has not been implemented")
 	}
 
+    deinit {
+        cancellable = nil
+    }
+
 	init(
         dataSource: WordListDataSource,
-		searchAction: @escaping (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void,
-		didSelectWord: @escaping (Word) -> UIViewController,
-		onSave: @escaping (Word) -> Void,
-		onDelete: @escaping (Word) -> Void
+		searchAction: SearchAction?,
+		onSave: ((Int) -> Void)? = nil,
+        onDelete: ((Int) -> Void)? = nil
 	) {
 		self.dataSource = dataSource
 		self.searchAction = searchAction
-		self.didSelectWord = didSelectWord
 		self.onSave = onSave
 		self.onDelete = onDelete
 		super.init(nibName: nil, bundle: nil)
@@ -86,17 +91,16 @@ extension WordListViewController {
 extension WordListViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-        let word = self.dataSource.word(at: indexPath.row)
-		show(didSelectWord(word), sender: self)
+        didSelectWord?(indexPath.row)
 	}
 
 	// MARK: Cell Swipe Action Methods
 	func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard onSave != nil else { return nil }
+
 		let saveAction = UIContextualAction(style: .normal, title: "Save") { [weak self] _, _, completion in
 			guard let self else { completion(false); return }
-            let word = self.dataSource.word(at: indexPath.row)
-            self.tableView.reloadSections(.init(integer: 0), with: .automatic)
-			self.onSave(word)
+            self.onSave!(indexPath.row)
 			completion(true)
 		}
 
@@ -107,11 +111,11 @@ extension WordListViewController: UITableViewDelegate {
 	}
 
 	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard onDelete != nil else { return nil }
+
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completion in
 			guard let self else { completion(false); return }
-            let word = self.dataSource.word(at: indexPath.row)
-			self.onDelete(word)
-            self.dataSource.removeWord(at: indexPath.row)
+            self.onDelete!(indexPath.row)
             self.tableView.reloadSections(.init(integer: 0), with: .automatic)
 			completion(true)
 		}
@@ -146,7 +150,7 @@ extension WordListViewController {
 		.sink { value in
 			DispatchQueue.global(qos: .userInitiated).async { [weak self] in
 				if let self, let text = value, !text.isEmpty {
-                    self.searchAction(text, self.handleAPIResult)
+                    self.searchAction?(text, self.handleAPIResult)
 				}
 			}
 		}

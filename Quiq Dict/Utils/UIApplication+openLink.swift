@@ -14,9 +14,9 @@ extension UIApplication {
 
 	func open(link: URL) {
 		if canOpenURL(link) {
-			open(link) { [weak self] success in
+			open(link) { success in
                 if !success {
-                    self?.rootViewController?.showAlert(title: "Something went wrong", message: "Could not open link")
+                    self.rootViewController?.showAlert(title: "Something went wrong", message: "Could not open link")
                 }
 			}
         } else {

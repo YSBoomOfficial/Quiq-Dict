@@ -25,7 +25,6 @@ class WordDetailCell: UITableViewCell {
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		translatesAutoresizingMaskIntoConstraints = false
 		selectionStyle = .none
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 		stackView.axis = .vertical
