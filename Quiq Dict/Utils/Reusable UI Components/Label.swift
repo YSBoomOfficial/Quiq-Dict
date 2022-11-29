@@ -1,5 +1,5 @@
 //
-//  UILabel+Ext.swift
+//  Label.swift
 //  Quiq Dict
 //
 //  Created by Yash Shah on 19/08/2022.
@@ -8,28 +8,15 @@
 import UIKit
 
 class Label: UILabel {
-	var topInset: CGFloat
-	var bottomInset: CGFloat
-	var leftInset: CGFloat
-	var rightInset: CGFloat
+	var topInset: CGFloat = 0
+	var bottomInset: CGFloat = 0
+	var leftInset: CGFloat = 0
+	var rightInset: CGFloat = 0
 
-	init(topInset: CGFloat = 0, bottomInset: CGFloat = 0, leftInset: CGFloat = 0, rightInset: CGFloat = 0) {
-		self.topInset = topInset
-		self.bottomInset = bottomInset
-		self.leftInset = leftInset
-		self.rightInset = rightInset
+	init() {
 		super.init(frame: .zero)
+		translatesAutoresizingMaskIntoConstraints = false
 		numberOfLines = 0
-	}
-
-	convenience init(text: String) {
-		self.init()
-		self.text = text
-	}
-
-	convenience init(attributedText: NSAttributedString) {
-		self.init()
-		self.attributedText = attributedText
 	}
 
 	required init?(coder: NSCoder) {
@@ -53,4 +40,25 @@ class Label: UILabel {
 			preferredMaxLayoutWidth = bounds.width - (leftInset + rightInset)
 		}
 	}
+}
+
+extension Label {
+	convenience init(text: String) {
+		self.init()
+		self.text = text
+	}
+
+	convenience init(attributedText: NSAttributedString) {
+		self.init()
+		self.attributedText = attributedText
+	}
+
+	convenience init(text: String, font: UIFont.TextStyle) {
+		self.init(text: text)
+		self.font = .preferredFont(
+			forTextStyle: font,
+			compatibleWith: .init(legibilityWeight: .bold)
+		)
+	}
+
 }

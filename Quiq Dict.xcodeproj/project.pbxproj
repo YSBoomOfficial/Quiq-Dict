@@ -32,8 +32,10 @@
 		D3808146291202150078C1F7 /* WordsLoaderFailureMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3808145291202150078C1F7 /* WordsLoaderFailureMock.swift */; };
 		D3808148291202780078C1F7 /* WordsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3808147291202780078C1F7 /* WordsLoaderTests.swift */; };
 		D395340928B001440072A52C /* makeAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340828B001440072A52C /* makeAttributedString.swift */; };
-		D395340B28B009E30072A52C /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340A28B009E30072A52C /* UILabel+Ext.swift */; };
+		D395340B28B009E30072A52C /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340A28B009E30072A52C /* Label.swift */; };
 		D3CBA768290D988000C9C5F1 /* TestWordListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */; };
+		D3D5FDFD2936802900F1EB01 /* LinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5FDFC2936802900F1EB01 /* LinkButton.swift */; };
+		D3D5FE012936825200F1EB01 /* String+trimmingPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5FE002936825200F1EB01 /* String+trimmingPrefix.swift */; };
 		D3F1F58828B936F100EA5330 /* WordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58728B936F100EA5330 /* WordDetailViewController.swift */; };
 		D3F1F58C28B93B3A00EA5330 /* WordDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58B28B93B3A00EA5330 /* WordDetailCell.swift */; };
 		D3F1F58E28B9432700EA5330 /* UIApplication+openLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */; };
@@ -89,9 +91,11 @@
 		D3808145291202150078C1F7 /* WordsLoaderFailureMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsLoaderFailureMock.swift; sourceTree = "<group>"; };
 		D3808147291202780078C1F7 /* WordsLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsLoaderTests.swift; sourceTree = "<group>"; };
 		D395340828B001440072A52C /* makeAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = makeAttributedString.swift; sourceTree = "<group>"; };
-		D395340A28B009E30072A52C /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		D395340A28B009E30072A52C /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		D3CBA75C290D97C200C9C5F1 /* Quiq Dict UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Quiq Dict UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWordListScreen.swift; sourceTree = "<group>"; };
+		D3D5FDFC2936802900F1EB01 /* LinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkButton.swift; sourceTree = "<group>"; };
+		D3D5FE002936825200F1EB01 /* String+trimmingPrefix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+trimmingPrefix.swift"; sourceTree = "<group>"; };
 		D3F1F58728B936F100EA5330 /* WordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailViewController.swift; sourceTree = "<group>"; };
 		D3F1F58B28B93B3A00EA5330 /* WordDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailCell.swift; sourceTree = "<group>"; };
 		D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+openLink.swift"; sourceTree = "<group>"; };
@@ -200,11 +204,10 @@
 		D3226B3B2898B42A00DA964A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */,
-				D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */,
-				D395340828B001440072A52C /* makeAttributedString.swift */,
-				D395340A28B009E30072A52C /* UILabel+Ext.swift */,
 				D35F8CD628EB52D2007841FC /* FileManager+documentsDirectory.swift */,
+				D3D5FE002936825200F1EB01 /* String+trimmingPrefix.swift */,
+				D3D5FE0229368B2C00F1EB01 /* Reusable UI Components */,
+				D3D5FDFE2936822900F1EB01 /* UIKit Extensions */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -272,6 +275,25 @@
 				D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */,
 			);
 			path = "Quiq Dict UITests";
+			sourceTree = "<group>";
+		};
+		D3D5FDFE2936822900F1EB01 /* UIKit Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */,
+				D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */,
+				D395340828B001440072A52C /* makeAttributedString.swift */,
+			);
+			path = "UIKit Extensions";
+			sourceTree = "<group>";
+		};
+		D3D5FE0229368B2C00F1EB01 /* Reusable UI Components */ = {
+			isa = PBXGroup;
+			children = (
+				D395340A28B009E30072A52C /* Label.swift */,
+				D3D5FDFC2936802900F1EB01 /* LinkButton.swift */,
+			);
+			path = "Reusable UI Components";
 			sourceTree = "<group>";
 		};
 		D3F1F58928B936F600EA5330 /* Word Detail Screen */ = {
@@ -447,6 +469,7 @@
 				D3F1F58C28B93B3A00EA5330 /* WordDetailCell.swift in Sources */,
 				D34EBDA928995E5200B41361 /* NetworkError.swift in Sources */,
 				D3226B252898B0F100DA964A /* SceneDelegate.swift in Sources */,
+				D3D5FE012936825200F1EB01 /* String+trimmingPrefix.swift in Sources */,
 				D3F1F58E28B9432700EA5330 /* UIApplication+openLink.swift in Sources */,
 				D3F8BC5328ECE86D00F74256 /* DataManaging.swift in Sources */,
 				D395340928B001440072A52C /* makeAttributedString.swift in Sources */,
@@ -456,7 +479,8 @@
 				D35F8CDC28EB64A2007841FC /* LocalPhoneticsAudioLoader.swift in Sources */,
 				D35F8CD728EB52D3007841FC /* FileManager+documentsDirectory.swift in Sources */,
 				D30EF9D928AF2128005C1358 /* WordCell.swift in Sources */,
-				D395340B28B009E30072A52C /* UILabel+Ext.swift in Sources */,
+				D3D5FDFD2936802900F1EB01 /* LinkButton.swift in Sources */,
+				D395340B28B009E30072A52C /* Label.swift in Sources */,
 				D30EF9D128AF1414005C1358 /* PhoneticsAudioLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

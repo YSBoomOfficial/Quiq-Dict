@@ -63,25 +63,17 @@ class WordDetailCell: UITableViewCell {
 	}
 }
 
-// MARK: Title Label Config and Subtitle Label method
+// MARK: Title Label
 extension WordDetailCell {
 	private func configureTitleLabelView() {
 		let titleLabel = Label(attributedText: makeAttributedString(title: word.title, phonetics: word.phoneticText))
 		titleLabel.bottomInset = 5
-		titleLabel.translatesAutoresizingMaskIntoConstraints = false
 		titleLabel.font = .preferredFont(forTextStyle: .title1, compatibleWith: .init(legibilityWeight: .bold))
 		stackView.addArrangedSubview(titleLabel)
 	}
-
-	private func makeSubtitleLabel(withText text: String, font: UIFont.TextStyle) -> Label {
-		let subtitleLabel = Label(text: text)
-		subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-		subtitleLabel.font = .preferredFont(forTextStyle: font, compatibleWith: .init(legibilityWeight: .bold))
-		return subtitleLabel
-	}
 }
 
-// MARK: Config Views for Phonetics
+// MARK: Phonetics
 extension WordDetailCell {
 	private func configurePhoneticsView() {
 		let phoneticsVStack = UIStackView()
@@ -90,7 +82,7 @@ extension WordDetailCell {
 		phoneticsVStack.alignment = .leading
 		phoneticsVStack.spacing = 5
 
-		let phoneticsLabel = makeSubtitleLabel(withText: "Phonetics", font: .title2)
+		let phoneticsLabel = Label(text: "Phonetics", font: .title2)
 		phoneticsLabel.topInset = 5
 		phoneticsVStack.addArrangedSubview(phoneticsLabel)
 
@@ -165,7 +157,7 @@ extension WordDetailCell {
 	}
 }
 
-// MARK: Config Views for Meanings
+// MARK: Meanings
 extension WordDetailCell {
 	private func configureMeaningsView() {
 		let meaningsVStack = UIStackView()
@@ -174,7 +166,7 @@ extension WordDetailCell {
 		meaningsVStack.alignment = .leading
 		meaningsVStack.spacing = 10
 
-		let meaningLabel = makeSubtitleLabel(withText: "Meanings", font: .title2)
+		let meaningLabel = Label(text: "Meanings", font: .title2)
 		meaningLabel.topInset = 5
 		meaningsVStack.addArrangedSubview(meaningLabel)
 
@@ -193,20 +185,20 @@ extension WordDetailCell {
 		meaningVStack.alignment = .leading
 		meaningVStack.spacing = 5
 
-		meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "Part of Speech: \(meaning.partOfSpeech.capitalized)", font: .title3))
+		meaningVStack.addArrangedSubview(Label(text: "Part of Speech: \(meaning.partOfSpeech.capitalized)", font: .title3))
 
 		if !meaning.synonyms.isEmpty {
-			meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "General Synonyms:", font: .headline))
+			meaningVStack.addArrangedSubview(Label(text: "General Synonyms:", font: .headline))
 			meaningVStack.addArrangedSubview(Label(text: meaning.synonyms.map(\.capitalized).joined(separator: ", ")))
 		}
 
 		if !meaning.antonyms.isEmpty {
-			meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "General Antonyms:", font: .headline))
+			meaningVStack.addArrangedSubview(Label(text: "General Antonyms:", font: .headline))
 			meaningVStack.addArrangedSubview(Label(text: meaning.antonyms.map(\.capitalized).joined(separator: ", ")))
 		}
 
 		if !meaning.definitions.isEmpty {
-			meaningVStack.addArrangedSubview(makeSubtitleLabel(withText: "Definitions:", font: .headline))
+			meaningVStack.addArrangedSubview(Label(text: "Definitions:", font: .headline))
 			for definition in meaning.definitions {
 				meaningVStack.addArrangedSubview(makeDefinitionView(forDefinition: definition))
 			}
@@ -229,12 +221,12 @@ extension WordDetailCell {
 		}
 
 		if !definition.synonyms.isEmpty {
-			definitionVStack.addArrangedSubview(makeSubtitleLabel(withText: "Synonyms:", font: .subheadline))
+			definitionVStack.addArrangedSubview(Label(text: "Synonyms:", font: .subheadline))
 			definitionVStack.addArrangedSubview(Label(text: definition.synonyms.map(\.capitalized).joined(separator: ", ")))
 		}
 
 		if !definition.antonyms.isEmpty {
-			definitionVStack.addArrangedSubview(makeSubtitleLabel(withText: "Antonyms:", font: .subheadline))
+			definitionVStack.addArrangedSubview(Label(text: "Antonyms:", font: .subheadline))
 			definitionVStack.addArrangedSubview(Label(text: definition.antonyms.map(\.capitalized).joined(separator: ", ")))
 		}
 
@@ -248,7 +240,7 @@ extension WordDetailCell {
 	}
 }
 
-// MARK: Config Views for License
+// MARK: License
 extension WordDetailCell {
 	private func configureBottomLicenseView() {
 		stackView.addArrangedSubview(makeLicenseView(forLicense: word.license, with: .title2))
@@ -260,31 +252,16 @@ extension WordDetailCell {
 		licenseVStack.axis = .vertical
 		licenseVStack.alignment = .leading
 
-		let licenseLabel = makeSubtitleLabel(withText: "License: \(license.name)", font: font)
+		let licenseLabel = Label(text: "License: \(license.name)", font: font)
 		licenseLabel.topInset = 5
 		licenseVStack.addArrangedSubview(licenseLabel)
-		licenseVStack.addArrangedSubview(makeLinkButton(forURL: license.url))
+		licenseVStack.addArrangedSubview(LinkButton(url: license.url))
 
 		return licenseVStack
 	}
-
-	private func makeLinkButton(forURL url: String) -> UIButton {
-		let linkButton = UIButton()
-		let attrString = NSAttributedString(string: url, attributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline), .link: url])
-		linkButton.setAttributedTitle(attrString, for: .normal)
-		linkButton.addTarget(self, action: #selector(linkTapped), for: .primaryActionTriggered)
-        linkButton.accessibilityIdentifier = "link_\(url)"
-		return linkButton
-	}
-
-	@objc private func linkTapped(_ sender: UIButton) {
-		guard let buttonText = sender.attributedTitle(for: .normal)?.string,
-			  let url = URL(string: buttonText) else { return }
-		UIApplication.shared.open(link: url)
-	}
 }
 
-// MARK: Config Views for Source URLs
+// MARK: Source URLs
 extension WordDetailCell {
 	// MARK: sourceUrls
 	private func configureSourceURLsView() {
@@ -294,12 +271,12 @@ extension WordDetailCell {
 		sourceURLsVStack.alignment = .leading
 		sourceURLsVStack.spacing = 5
 
-		let sourceUrlsLabel = makeSubtitleLabel(withText: "Source URLs", font: .title2)
+		let sourceUrlsLabel = Label(text: "Source URLs", font: .title2)
 		sourceUrlsLabel.topInset = 5
 		sourceURLsVStack.addArrangedSubview(sourceUrlsLabel)
 
 		for url in word.sourceUrls {
-			sourceURLsVStack.addArrangedSubview(makeLinkButton(forURL: url))
+			sourceURLsVStack.addArrangedSubview(LinkButton(url: url))
 		}
 
 		stackView.addArrangedSubview(sourceURLsVStack)
