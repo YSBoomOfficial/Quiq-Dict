@@ -89,7 +89,7 @@ extension WordListViewController {
 			guard let self else { return }
 			switch result {
 				case .success(let words):
-                    self.dataSource.updateDataSource(with: words)
+                    self.dataSource.update(with: words)
                     self.tableView.reloadSections(.init(integer: 0), with: .automatic)
 				case .failure(let error):
 					self.showAlert(withError: error)

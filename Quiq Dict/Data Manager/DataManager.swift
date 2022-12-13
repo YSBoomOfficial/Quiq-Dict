@@ -78,7 +78,7 @@ final class DataManager: DataManaging {
 					switch result {
 						case .success(let data):
 							do {
-								let path = FileManager.documentsDirectory.appendingPathComponent(filename).appendingPathExtension("mp3")
+								let path = FileManager.documentsDirectory.appendingPathComponent(filename)
 								try data.write(to: path, options: [.atomic, .completeFileProtection])
 								print("\n💻 - DataManager - addAudio() - Successful at path: \(path)\n")
 							} catch {
@@ -96,7 +96,7 @@ final class DataManager: DataManaging {
 		for phon in phonetics {
 			if let filename = phon.filename {
 				do {
-					let path = FileManager.documentsDirectory.appendingPathComponent(filename).appendingPathExtension("mp3")
+					let path = FileManager.documentsDirectory.appendingPathComponent(filename)
 					try FileManager.default.removeItem(at: path)
 					print("\n💻 - DataManager - removeAudio() - Successful at path: \(path)\n")
 				} catch {
@@ -107,8 +107,8 @@ final class DataManager: DataManaging {
 	}
 
 	func audio(for wordUrlString: String) -> Data? {
-		guard let filename = wordUrlString.components(separatedBy: "/").split(separator: ".").first?.joined() else { return nil }
-        let path = FileManager.documentsDirectory.appendingPathComponent(filename).appendingPathExtension("mp3")
+		guard let filename = wordUrlString.components(separatedBy: "/").last else { return nil }
+        let path = FileManager.documentsDirectory.appendingPathComponent(filename)
 		return try? Data(contentsOf: path)
 	}
 }

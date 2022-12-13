@@ -9,6 +9,7 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private let dataManager = DataManager(phoneticsLoader: RemotePhoneticsAudioLoader())
+	private let localWordListDataSource = WordListDataSource()
 
 	var window: UIWindow?
 
@@ -75,6 +76,7 @@ fileprivate extension SceneDelegate {
 				guard let self else { return }
 				let word = remoteWordListDataSource.word(at: index)
 				self.dataManager.add(word: word)
+				self.localWordListDataSource.update(with: self.dataManager.words)
 			}
 		)
 
@@ -94,27 +96,29 @@ fileprivate extension SceneDelegate {
     }
 
     private func makeWordListVCLoadsLocalData() -> WordListViewController {
+		localWordListDataSource.update(with: dataManager.words)
+
         let localWordsLoader = LocalWordsLoader(dataManager: dataManager)
         let localPhoneticsLoader = LocalPhoneticsAudioLoader(dataManager: dataManager)
 
-		let localWordListDataSource = WordListDataSource(words: dataManager.words)
 		let localWordListDelegate = WordListDelegate(
 			onDelete: { [weak self] index in
 				guard let self else { return }
-				let word = localWordListDataSource.word(at: index)
+				let word = self.localWordListDataSource.word(at: index)
 				self.dataManager.remove(word: word)
-				localWordListDataSource.removeWord(at: index)
+				self.localWordListDataSource.update(with: self.dataManager.words)
 			}
 		)
 
         let wordListVCLoadsLocalData = WordListViewController(
-            dataSource: localWordListDataSource,
+			dataSource: localWordListDataSource,
 			delegate: localWordListDelegate,
             searchAction: localWordsLoader.fetchDefinitions
         )
 
 		localWordListDelegate.didSelectWord = { [weak self, weak wordListVCLoadsLocalData] index in
-			let word = localWordListDataSource.word(at: index)
+			guard let self else { return }
+			let word = self.localWordListDataSource.word(at: index)
 			let vc = WordDetailViewController(word: word, audioService: localPhoneticsLoader)
 			wordListVCLoadsLocalData?.show(vc, sender: self)
 		}
