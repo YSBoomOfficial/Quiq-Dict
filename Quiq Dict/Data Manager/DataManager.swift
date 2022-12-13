@@ -42,7 +42,7 @@ final class DataManager: DataManaging {
 		do {
 			let data = try JSONEncoder().encode(words)
 			try data.write(to: wordsSavePath, options: [.atomic, .completeFileProtection])
-			print("\n💻 - DataManager - save() - Successful\n")
+			print("\n💻 - DataManager - save() - Successful at path: \(wordsSavePath)\n")
 		} catch {
 			print("\n💻 - DataManager - save() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 		}
@@ -78,8 +78,9 @@ final class DataManager: DataManaging {
 					switch result {
 						case .success(let data):
 							do {
-								let path = FileManager.documentsDirectory.appendingPathComponent(filename)
+								let path = FileManager.documentsDirectory.appendingPathComponent(filename).appendingPathExtension("mp3")
 								try data.write(to: path, options: [.atomic, .completeFileProtection])
+								print("\n💻 - DataManager - addAudio() - Successful at path: \(path)\n")
 							} catch {
 								print("\n💻 - DataManager - addAudio() - result.success - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 							}
@@ -95,18 +96,19 @@ final class DataManager: DataManaging {
 		for phon in phonetics {
 			if let filename = phon.filename {
 				do {
-					let path = FileManager.documentsDirectory.appendingPathComponent(filename)
-					try FileManager.default.removeItem(atPath: path.absoluteString)
+					let path = FileManager.documentsDirectory.appendingPathComponent(filename).appendingPathExtension("mp3")
+					try FileManager.default.removeItem(at: path)
+					print("\n💻 - DataManager - removeAudio() - Successful at path: \(path)\n")
 				} catch {
-					print("\n💻 - DataManager - addAudio() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
+					print("\n💻 - DataManager - removeAudio() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 				}
 			}
 		}
 	}
 
 	func audio(for wordUrlString: String) -> Data? {
-		guard let filename = wordUrlString.components(separatedBy: "/").last else { return nil }
-        let path = FileManager.documentsDirectory.appendingPathComponent(filename)
+		guard let filename = wordUrlString.components(separatedBy: "/").split(separator: ".").first?.joined() else { return nil }
+        let path = FileManager.documentsDirectory.appendingPathComponent(filename).appendingPathExtension("mp3")
 		return try? Data(contentsOf: path)
 	}
 }
