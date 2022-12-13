@@ -15,11 +15,8 @@ class WordListViewController: UIViewController {
     typealias SearchAction = (String, @escaping (Result<[Word], NetworkError>) -> Void) -> Void
 
     private let dataSource: WordListDataSource
+	private let delegate: WordListDelegate
 	private let searchAction: SearchAction?
-    private let onSave: ((Int) -> Void)?
-    private let onDelete: ((Int) -> Void)?
-
-    var didSelectWord: ((Int) -> Void)!
 
     private var cancellable: AnyCancellable?
 
@@ -33,14 +30,12 @@ class WordListViewController: UIViewController {
 
 	init(
         dataSource: WordListDataSource,
-		searchAction: SearchAction?,
-		onSave: ((Int) -> Void)? = nil,
-        onDelete: ((Int) -> Void)? = nil
+		delegate: WordListDelegate,
+		searchAction: SearchAction?
 	) {
 		self.dataSource = dataSource
+		self.delegate = delegate
 		self.searchAction = searchAction
-		self.onSave = onSave
-		self.onDelete = onDelete
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -62,7 +57,7 @@ extension WordListViewController {
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		tableView.register(WordCell.self, forCellReuseIdentifier: WordCell.reuseID)
 		tableView.dataSource = dataSource
-		tableView.delegate = self
+		tableView.delegate = delegate
 
 		view.addSubview(tableView)
 		NSLayoutConstraint.activate([
@@ -87,44 +82,6 @@ extension WordListViewController {
 	}
 }
 
-// MARK: UITableViewControllerDelegate
-extension WordListViewController: UITableViewDelegate {
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-        didSelectWord?(indexPath.row)
-	}
-
-	// MARK: Cell Swipe Action Methods
-	func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard onSave != nil else { return nil }
-
-		let saveAction = UIContextualAction(style: .normal, title: "Save") { [weak self] _, _, completion in
-			guard let self else { completion(false); return }
-            self.onSave!(indexPath.row)
-			completion(true)
-		}
-
-		saveAction.backgroundColor = .systemGreen
-		saveAction.image = .init(systemName: "archivebox")
-
-		return .init(actions: [saveAction])
-	}
-
-	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard onDelete != nil else { return nil }
-
-		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completion in
-			guard let self else { completion(false); return }
-            self.onDelete!(indexPath.row)
-            self.tableView.reloadSections(.init(integer: 0), with: .automatic)
-			completion(true)
-		}
-
-		deleteAction.image = .init(systemName: "trash")
-		return .init(actions: [deleteAction])
-	}
-}
-
 // MARK: Actions
 extension WordListViewController {
 	private func handleAPIResult(_ result: Result<[Word], NetworkError>) {
@@ -132,7 +89,7 @@ extension WordListViewController {
 			guard let self else { return }
 			switch result {
 				case .success(let words):
-                    self.dataSource.updateDataSource(with: words)
+                    self.dataSource.update(with: words)
                     self.tableView.reloadSections(.init(integer: 0), with: .automatic)
 				case .failure(let error):
 					self.showAlert(withError: error)

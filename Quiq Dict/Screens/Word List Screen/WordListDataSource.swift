@@ -18,18 +18,9 @@ final class WordListDataSource: NSObject {
         words[index]
     }
 
-    func updateDataSource(with words: [Word]) {
-        self.words = words
-    }
-
-    func removeWord(at index: Int) {
-        words.remove(at: index)
-    }
-
-    func removeAllWords() {
-        words = []
-    }
-
+	func update(with words: [Word]) {
+		self.words = words
+	}
 }
 
 // MARK: UITableViewDataSource Methods

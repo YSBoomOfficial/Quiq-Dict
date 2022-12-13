@@ -42,7 +42,7 @@ final class DataManager: DataManaging {
 		do {
 			let data = try JSONEncoder().encode(words)
 			try data.write(to: wordsSavePath, options: [.atomic, .completeFileProtection])
-			print("\n💻 - DataManager - save() - Successful\n")
+			print("\n💻 - DataManager - save() - Successful at path: \(wordsSavePath)\n")
 		} catch {
 			print("\n💻 - DataManager - save() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 		}
@@ -80,6 +80,7 @@ final class DataManager: DataManaging {
 							do {
 								let path = FileManager.documentsDirectory.appendingPathComponent(filename)
 								try data.write(to: path, options: [.atomic, .completeFileProtection])
+								print("\n💻 - DataManager - addAudio() - Successful at path: \(path)\n")
 							} catch {
 								print("\n💻 - DataManager - addAudio() - result.success - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 							}
@@ -96,9 +97,10 @@ final class DataManager: DataManaging {
 			if let filename = phon.filename {
 				do {
 					let path = FileManager.documentsDirectory.appendingPathComponent(filename)
-					try FileManager.default.removeItem(atPath: path.absoluteString)
+					try FileManager.default.removeItem(at: path)
+					print("\n💻 - DataManager - removeAudio() - Successful at path: \(path)\n")
 				} catch {
-					print("\n💻 - DataManager - addAudio() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
+					print("\n💻 - DataManager - removeAudio() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 				}
 			}
 		}
