@@ -37,7 +37,6 @@ final class DataManager: DataManaging {
 		print("\n")
 	}
 
-    #warning("🔨 - Local Saving now works but only shows up in the tableview when you relaunch the app")
 	private func save() {
 		do {
 			let data = try JSONEncoder().encode(words)
@@ -67,7 +66,7 @@ final class DataManager: DataManaging {
 	}
 
 	func search(for word: String) -> [Word] {
-		words.filter { $0.word == word }
+		words.filter { $0.word.localizedCaseInsensitiveContains(word) }
 	}
 
 	// MARK: [Word.Phonetic] - Add, Remove and Search operations
@@ -80,7 +79,7 @@ final class DataManager: DataManaging {
 							do {
 								let path = FileManager.documentsDirectory.appendingPathComponent(filename)
 								try data.write(to: path, options: [.atomic, .completeFileProtection])
-								print("\n💻 - DataManager - addAudio() - Successful at path: \(path)\n")
+								print("\n💻 - DataManager - addAudio() - Successfully saved at path: \(path)\n")
 							} catch {
 								print("\n💻 - DataManager - addAudio() - result.success - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 							}
@@ -98,7 +97,7 @@ final class DataManager: DataManaging {
 				do {
 					let path = FileManager.documentsDirectory.appendingPathComponent(filename)
 					try FileManager.default.removeItem(at: path)
-					print("\n💻 - DataManager - removeAudio() - Successful at path: \(path)\n")
+					print("\n💻 - DataManager - removeAudio() - Successfully removed at path: \(path)\n")
 				} catch {
 					print("\n💻 - DataManager - removeAudio() - ⚠️ERROR⚠️: \(error.localizedDescription) - \(error)\n")
 				}

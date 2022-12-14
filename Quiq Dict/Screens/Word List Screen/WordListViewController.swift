@@ -18,6 +18,8 @@ class WordListViewController: UIViewController {
 	private let delegate: WordListDelegate
 	private let searchAction: SearchAction?
 
+	var searchDidFinishAction: (() -> Void)?
+
     private var cancellable: AnyCancellable?
 
 	required init?(coder: NSCoder) {
@@ -78,6 +80,7 @@ extension WordListViewController {
 		searchController.searchBar.placeholder = "Search for a word..."
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.keyboardType = .default
+		searchController.searchResultsUpdater = self
 
 		navigationController?.navigationBar.barTintColor = .systemBackground
 		navigationItem.searchController = searchController
@@ -95,7 +98,7 @@ extension WordListViewController {
 			switch result {
 				case .success(let words):
                     self.dataSource.update(with: words)
-                    self.tableView.reloadSections(.init(integer: 0), with: .automatic)
+                    self.tableView.reloadWithAnimation()
 				case .failure(let error):
 					self.showAlert(withError: error)
 			}
@@ -116,6 +119,16 @@ extension WordListViewController {
 				}
 			}
 		}
+	}
+}
 
+// MARK: UISearchResultsUpdating Methods
+extension WordListViewController: UISearchResultsUpdating {
+	func updateSearchResults(for searchController: UISearchController) {
+		// reload data when cancel button tapped
+		if !searchController.isActive {
+			searchDidFinishAction?()
+			tableView.reloadWithAnimation()
+		}
 	}
 }

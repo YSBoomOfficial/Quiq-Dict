@@ -92,6 +92,11 @@ fileprivate extension SceneDelegate {
 			wordListVCLoadsRemoteData?.show(vc, sender: self)
 		}
 
+		// MARK: Remove if you don't wan't remote search results to clear when you tap cancel button
+		wordListVCLoadsRemoteData.searchDidFinishAction = {
+			remoteWordListDataSource.update(with: [])
+		}
+
 		return wordListVCLoadsRemoteData
     }
 
@@ -121,6 +126,11 @@ fileprivate extension SceneDelegate {
 			let word = self.localWordListDataSource.word(at: index)
 			let vc = WordDetailViewController(word: word, audioService: localPhoneticsLoader)
 			wordListVCLoadsLocalData?.show(vc, sender: self)
+		}
+
+		wordListVCLoadsLocalData.searchDidFinishAction = { [weak self] in
+			guard let self else { return }
+			self.localWordListDataSource.update(with: self.dataManager.words)
 		}
 
         return wordListVCLoadsLocalData

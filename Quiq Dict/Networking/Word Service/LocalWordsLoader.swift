@@ -15,11 +15,17 @@ final class LocalWordsLoader: WordsLoader {
 	}
 
 	func fetchDefinitions(for word: String, completion: @escaping (Result<[Word], NetworkError>) -> Void) {
-        print("\n💻 - LocalWordsLoader - fetchDefinitions - \(word)\n")
+		guard !word.isEmpty else {
+			print("\n💻 - LocalWordsLoader - fetchDefinitions - empty string passed in, return all words\n")
+			completion(.success(dataManager.words))
+			return
+		}
+
+		print("\n💻 - LocalWordsLoader - fetchDefinitions - \(word)\n")
         let words = dataManager.search(for: word)
-        if word.isEmpty {
-            completion(.failure(.badResponse(404)))
-            print("\n💻 - LocalWordsLoader - fetchDefinitions - EMPTY\n")
+        if words.isEmpty {
+			print("\n💻 - LocalWordsLoader - fetchDefinitions - No Data, return all words\n")
+			completion(.success(dataManager.words))
         } else {
             completion(.success(words))
             print("\n💻 - LocalWordsLoader - fetchDefinitions - Has Data\n")

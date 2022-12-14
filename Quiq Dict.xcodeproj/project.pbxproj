@@ -33,6 +33,7 @@
 		D3808148291202780078C1F7 /* WordsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3808147291202780078C1F7 /* WordsLoaderTests.swift */; };
 		D395340928B001440072A52C /* makeAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340828B001440072A52C /* makeAttributedString.swift */; };
 		D395340B28B009E30072A52C /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340A28B009E30072A52C /* Label.swift */; };
+		D3C3032A2949714B003AAC4F /* UITableView+reloadWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C303292949714B003AAC4F /* UITableView+reloadWithAnimation.swift */; };
 		D3CBA768290D988000C9C5F1 /* TestWordListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */; };
 		D3D5FDFD2936802900F1EB01 /* LinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5FDFC2936802900F1EB01 /* LinkButton.swift */; };
 		D3D5FE012936825200F1EB01 /* String+trimmingPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5FE002936825200F1EB01 /* String+trimmingPrefix.swift */; };
@@ -97,6 +98,7 @@
 		D3808147291202780078C1F7 /* WordsLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsLoaderTests.swift; sourceTree = "<group>"; };
 		D395340828B001440072A52C /* makeAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = makeAttributedString.swift; sourceTree = "<group>"; };
 		D395340A28B009E30072A52C /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		D3C303292949714B003AAC4F /* UITableView+reloadWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+reloadWithAnimation.swift"; sourceTree = "<group>"; };
 		D3CBA75C290D97C200C9C5F1 /* Quiq Dict UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Quiq Dict UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWordListScreen.swift; sourceTree = "<group>"; };
 		D3D5FDFC2936802900F1EB01 /* LinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkButton.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */,
 				D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */,
 				D395340828B001440072A52C /* makeAttributedString.swift */,
+				D3C303292949714B003AAC4F /* UITableView+reloadWithAnimation.swift */,
 			);
 			path = "UIKit Extensions";
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				D3226B3D2898B44600DA964A /* UIViewController+ShowError.swift in Sources */,
 				D35F8CD528EB5294007841FC /* DataManager.swift in Sources */,
 				D3FFD474294806720062B312 /* WordListDelegate.swift in Sources */,
+				D3C3032A2949714B003AAC4F /* UITableView+reloadWithAnimation.swift in Sources */,
 				D3226B3F2898B73600DA964A /* WordsLoader.swift in Sources */,
 				D3226B272898B0F100DA964A /* WordListViewController.swift in Sources */,
 				D3226B372898B16D00DA964A /* Word.swift in Sources */,

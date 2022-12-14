@@ -44,7 +44,7 @@ final class WordListDelegate: NSObject, UITableViewDelegate {
 		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completion in
 			guard let self else { completion(false); return }
 			self.onDelete!(indexPath.row)
-			tableView.reloadSections(.init(integer: 0), with: .automatic)
+			tableView.reloadWithAnimation()
 			completion(true)
 		}
 
