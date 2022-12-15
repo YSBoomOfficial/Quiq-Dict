@@ -1,6 +1,10 @@
 # Quiq-Dict
 A Minimal Dictionary App built with UIKit
 
+## Features
+- Search for Words and get back detailed information. Eg: definitions, synonyms, antonyms, example sentences, phonetic transcriptions and audio examples.
+- Save Words and their related data to disk for offline access
+
 ## Screenshots
 | Search Screen | Detail Screen |
 | --- | --- |
@@ -17,15 +21,12 @@ For more information about the API used in this app see [dictionaryapi.dev](http
 - User’s Documents Directory for local storage
 - No 3rd party libraries
 
-### Currently Working on
-- [ ] Adding Unit Tests and UI Tests
-- [ ] Extracting components of the detail view to a `UIView` subclass
-- [ ] Fixing an issue with saving local data (or migrate to using CoreData or Realm)
-
 ### Focus areas for personal development
 - Reduce tight code coupling (eg: using DI)
 - Making the app easy to test (eg: Making types easy to mock using protocols)
 - make ViewControllers Reusable
+- Extracting components of larger views into smaller views
+- Unit Tests and UI Tests
 
 ### Alternatives and Future directions
 - MVVM: 
@@ -36,7 +37,6 @@ For more information about the API used in this app see [dictionaryapi.dev](http
 ### Lessons I learned
 1. Don’t make unnecessary abstractions that you ‘think’ you’ll need later on
 	- When I started working on the app I tried to make unnecessary abstractions and add unnecessary features to the Networking layer that didn’t really need (eg: Fallback Service, Retry Request etc). 
-
 
 2. Have a clear plan before trying to build out a feature 
 	- This lead to me going back on some decisions. eg: When I was first trying to make the detail view I used a `UITableView` and a single `UITableViewCell`. I attempted to make something similar with a `UIScrollView` and a `UIStackView` but it didn’t function how I wanted it to so I reverted to the old implementation.
