@@ -8,36 +8,79 @@
 import XCTest
 @testable import Quiq_Dict
 
-final class WordsLoaderTests: XCTestCase {
-    var loader: WordsLoader!
+final class WordsLoaderTest: XCTestCase {
+	private let word = "hello"
+	private let url = URL(string: API.urlString(forWord: "hello"))!
 
-    override func tearDown() {
-        super.tearDown()
-        loader = nil
-    }
+	private var loader: WordsLoader!
+	private var session: URLSession!
 
-    func test_words_loader_returns_correct_response() {
-        loader = WordsLoaderSuccessMock()
-        loader.fetchDefinitions(for: "hello") { result in
-            switch result {
-                case .success(let words):
-                    XCTAssertEqual(words.count, 1, "There should 1 word in the array")
-                    XCTAssertEqual(words.first!, Word.example, "Response decoded from the JSON file should be the same as the example")
-                case .failure(_): XCTFail("No Error Should be thrown")
-            }
-        }
+	override func setUp() {
+		super.setUp()
+		let config = URLSessionConfiguration.ephemeral
+		config.protocolClasses = [MockURLProtocol.self]
+		session = .init(configuration: config)
+	}
 
-    }
+	override func tearDown() {
+		super.tearDown()
+		loader = nil
+	}
 
-    func test_words_loader_fails_with_error() {
-        loader = WordsLoaderFailureMock()
-        loader.fetchDefinitions(for: "hello") { result in
-            switch result {
-                case .success(_): XCTFail("No Data Should be Returned")
-                case .failure(let error):
-                    XCTAssertEqual(error.description, "The server couldn't find what you were looking for", "Incorrect error message")
-            }
-        }
-    }
+	func test_fetchDefinitions_returnsData() {
+		let data = try! JSONEncoder().encode(Word.example)
+
+		MockURLProtocol.loadingHandler = {
+			let response = HTTPURLResponse(
+				url: self.url,
+				statusCode: 200,
+				httpVersion: nil,
+				headerFields: nil
+			)
+
+			return (response!, data)
+		}
+
+		loader = RemoteWordsLoader(session: session)
+		loader.fetchDefinitions(for: word) { result in
+			switch result {
+				case .success(let words):
+					XCTAssertEqual(words.count, 1, "There should 1 word in the array")
+					XCTAssertEqual(
+						words.first!,
+						Word.example,
+						"Response decoded from the JSON file should be the same as the example"
+					)
+				case .failure(_): XCTFail("No Error Should be thrown")
+			}
+		}
+
+	}
+
+	func test_fetchDefinitions_returnsNotFoundError() {
+		MockURLProtocol.loadingHandler = {
+			let response = HTTPURLResponse(
+				url: self.url,
+				statusCode: 404,
+				httpVersion: nil,
+				headerFields: nil
+			)
+
+			return (response!, nil)
+		}
+
+		loader = RemoteWordsLoader(session: session)
+		loader.fetchDefinitions(for: word) { result in
+			switch result {
+				case .success(_): XCTFail("No Data Should be Returned")
+				case .failure(let error):
+					XCTAssertEqual(
+						error,
+						NetworkError.badResponse(404),
+						"Should be invalid status code"
+					)
+			}
+		}
+	}
 
 }

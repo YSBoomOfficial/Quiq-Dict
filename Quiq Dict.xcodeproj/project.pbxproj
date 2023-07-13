@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		D30EF9D128AF1414005C1358 /* PhoneticsAudioLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30EF9D028AF1414005C1358 /* PhoneticsAudioLoader.swift */; };
 		D30EF9D928AF2128005C1358 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30EF9D828AF2128005C1358 /* WordCell.swift */; };
-		D319556F29120F74000101C6 /* PhoneticsAudioLoaderSuccessMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D319556E29120F74000101C6 /* PhoneticsAudioLoaderSuccessMock.swift */; };
-		D319557129121015000101C6 /* PhoneticsAudioLoaderFailureMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D319557029121015000101C6 /* PhoneticsAudioLoaderFailureMock.swift */; };
 		D3226B232898B0F100DA964A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B222898B0F100DA964A /* AppDelegate.swift */; };
 		D3226B252898B0F100DA964A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B242898B0F100DA964A /* SceneDelegate.swift */; };
 		D3226B272898B0F100DA964A /* WordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B262898B0F100DA964A /* WordListViewController.swift */; };
@@ -28,11 +26,11 @@
 		D35F8CDC28EB64A2007841FC /* LocalPhoneticsAudioLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F8CDB28EB64A2007841FC /* LocalPhoneticsAudioLoader.swift */; };
 		D35F8CDF28EB64DD007841FC /* RemoteWordsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F8CDE28EB64DD007841FC /* RemoteWordsLoader.swift */; };
 		D35F8CE128EB64EE007841FC /* LocalWordsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35F8CE028EB64EE007841FC /* LocalWordsLoader.swift */; };
-		D3808142291200B40078C1F7 /* WordsLoaderSuccessMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3808141291200B40078C1F7 /* WordsLoaderSuccessMock.swift */; };
-		D3808146291202150078C1F7 /* WordsLoaderFailureMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3808145291202150078C1F7 /* WordsLoaderFailureMock.swift */; };
 		D3808148291202780078C1F7 /* WordsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3808147291202780078C1F7 /* WordsLoaderTests.swift */; };
 		D395340928B001440072A52C /* makeAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340828B001440072A52C /* makeAttributedString.swift */; };
 		D395340B28B009E30072A52C /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = D395340A28B009E30072A52C /* Label.swift */; };
+		D3A81BC92A60751C00CD325B /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A81BC82A60751C00CD325B /* MockURLProtocol.swift */; };
+		D3A81BCE2A6079E000CD325B /* API+URLString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A81BCD2A6079E000CD325B /* API+URLString.swift */; };
 		D3C3032A2949714B003AAC4F /* UITableView+reloadWithAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C303292949714B003AAC4F /* UITableView+reloadWithAnimation.swift */; };
 		D3CBA768290D988000C9C5F1 /* TestWordListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */; };
 		D3D5FDFD2936802900F1EB01 /* LinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D5FDFC2936802900F1EB01 /* LinkButton.swift */; };
@@ -70,8 +68,6 @@
 		D30EF9D028AF1414005C1358 /* PhoneticsAudioLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneticsAudioLoader.swift; sourceTree = "<group>"; };
 		D30EF9D828AF2128005C1358 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		D319556C29120F41000101C6 /* hello-uk.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "hello-uk.mp3"; sourceTree = "<group>"; };
-		D319556E29120F74000101C6 /* PhoneticsAudioLoaderSuccessMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneticsAudioLoaderSuccessMock.swift; sourceTree = "<group>"; };
-		D319557029121015000101C6 /* PhoneticsAudioLoaderFailureMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneticsAudioLoaderFailureMock.swift; sourceTree = "<group>"; };
 		D3226B1F2898B0F100DA964A /* Quiq Dict.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quiq Dict.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3226B222898B0F100DA964A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3226B242898B0F100DA964A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,12 +88,12 @@
 		D35F8CDE28EB64DD007841FC /* RemoteWordsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteWordsLoader.swift; sourceTree = "<group>"; };
 		D35F8CE028EB64EE007841FC /* LocalWordsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalWordsLoader.swift; sourceTree = "<group>"; };
 		D3808136291200690078C1F7 /* Quiq Dict Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Quiq Dict Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3808141291200B40078C1F7 /* WordsLoaderSuccessMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsLoaderSuccessMock.swift; sourceTree = "<group>"; };
 		D38081432912012D0078C1F7 /* hello.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hello.json; sourceTree = "<group>"; };
-		D3808145291202150078C1F7 /* WordsLoaderFailureMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsLoaderFailureMock.swift; sourceTree = "<group>"; };
 		D3808147291202780078C1F7 /* WordsLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsLoaderTests.swift; sourceTree = "<group>"; };
 		D395340828B001440072A52C /* makeAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = makeAttributedString.swift; sourceTree = "<group>"; };
 		D395340A28B009E30072A52C /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		D3A81BC82A60751C00CD325B /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		D3A81BCD2A6079E000CD325B /* API+URLString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+URLString.swift"; sourceTree = "<group>"; };
 		D3C303292949714B003AAC4F /* UITableView+reloadWithAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+reloadWithAnimation.swift"; sourceTree = "<group>"; };
 		D3CBA75C290D97C200C9C5F1 /* Quiq Dict UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Quiq Dict UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3CBA767290D988000C9C5F1 /* TestWordListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWordListScreen.swift; sourceTree = "<group>"; };
@@ -159,15 +155,6 @@
 			path = "Test Data";
 			sourceTree = "<group>";
 		};
-		D319556D29120F5A000101C6 /* PhoneticsAudioLoader Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				D319556E29120F74000101C6 /* PhoneticsAudioLoaderSuccessMock.swift */,
-				D319557029121015000101C6 /* PhoneticsAudioLoaderFailureMock.swift */,
-			);
-			path = "PhoneticsAudioLoader Mocks";
-			sourceTree = "<group>";
-		};
 		D3226B162898B0F100DA964A = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +208,7 @@
 				D3D5FE002936825200F1EB01 /* String+trimmingPrefix.swift */,
 				D3D5FE0229368B2C00F1EB01 /* Reusable UI Components */,
 				D3D5FDFE2936822900F1EB01 /* UIKit Extensions */,
+				D3A81BCD2A6079E000CD325B /* API+URLString.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -271,15 +259,6 @@
 				D3808147291202780078C1F7 /* WordsLoaderTests.swift */,
 			);
 			path = "Quiq Dict Tests";
-			sourceTree = "<group>";
-		};
-		D38081402912009D0078C1F7 /* WordsLoader Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				D3808141291200B40078C1F7 /* WordsLoaderSuccessMock.swift */,
-				D3808145291202150078C1F7 /* WordsLoaderFailureMock.swift */,
-			);
-			path = "WordsLoader Mocks";
 			sourceTree = "<group>";
 		};
 		D3CBA75D290D97C200C9C5F1 /* Quiq Dict UITests */ = {
@@ -344,8 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				D319556B29120F27000101C6 /* Test Data */,
-				D38081402912009D0078C1F7 /* WordsLoader Mocks */,
-				D319556D29120F5A000101C6 /* PhoneticsAudioLoader Mocks */,
+				D3A81BC82A60751C00CD325B /* MockURLProtocol.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -512,6 +490,7 @@
 				D30EF9D928AF2128005C1358 /* WordCell.swift in Sources */,
 				D3D5FE0E2936A2F300F1EB01 /* MeaningView.swift in Sources */,
 				D3D5FDFD2936802900F1EB01 /* LinkButton.swift in Sources */,
+				D3A81BCE2A6079E000CD325B /* API+URLString.swift in Sources */,
 				D395340B28B009E30072A52C /* Label.swift in Sources */,
 				D30EF9D128AF1414005C1358 /* PhoneticsAudioLoader.swift in Sources */,
 			);
@@ -522,10 +501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3808148291202780078C1F7 /* WordsLoaderTests.swift in Sources */,
-				D319556F29120F74000101C6 /* PhoneticsAudioLoaderSuccessMock.swift in Sources */,
-				D319557129121015000101C6 /* PhoneticsAudioLoaderFailureMock.swift in Sources */,
-				D3808142291200B40078C1F7 /* WordsLoaderSuccessMock.swift in Sources */,
-				D3808146291202150078C1F7 /* WordsLoaderFailureMock.swift in Sources */,
+				D3A81BC92A60751C00CD325B /* MockURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,3 +26,18 @@ enum NetworkError: Error, CustomStringConvertible {
 		}
 	}
 }
+
+extension NetworkError: Equatable {
+	static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {
+		switch (lhs, rhs) {
+			case (.badURL, .badURL), (.decodingError, .decodingError):
+				return true
+			case (.badResponse(let statusCodeLhs), .badResponse(let statusCodeRhs)):
+				return statusCodeLhs == statusCodeRhs
+			case (.other(let errorLhs), .other(let errorRhs)):
+				return errorLhs.localizedDescription == errorRhs.localizedDescription
+			default:
+				return false
+		}
+	}
+}

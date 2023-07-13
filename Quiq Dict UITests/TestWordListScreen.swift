@@ -14,7 +14,6 @@ final class TestWordListScreen: XCTestCase {
     override func setUp() {
         super.setUp()
         app = .init()
-        #warning("🔨 - Inject Networking Mock instaed of using the actual network (use launchArguments & launchEnvironment)")
         app.launch()
     }
 

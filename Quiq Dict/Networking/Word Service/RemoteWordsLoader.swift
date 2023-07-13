@@ -18,7 +18,7 @@ final class RemoteWordsLoader: WordsLoader {
 	}
 
 	func fetchDefinitions(for word: String, completion: @escaping (Result<[Word], NetworkError>) -> Void) {
-		guard let url = URL(string: "https://api.dictionaryapi.dev/api/v2/entries/en/\(word.lowercased())") else {
+		guard let url = URL(string: API.urlString(forWord: word)) else {
 			completion(.failure(.badURL))
 			return
 		}
