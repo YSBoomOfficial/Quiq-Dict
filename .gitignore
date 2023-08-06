@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+.Trashes
+DerivedData/
+
+# Xcode
+xcuserdata/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# SPM
+Packages/
+Package.pins
+Package.resolved
+.swiftpm
+.build/
