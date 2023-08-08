@@ -25,7 +25,8 @@ final class DataManager: DataManaging {
 	private func load() {
 		do {
             let data = try Data(contentsOf: wordsSavePath)
-			words = try JSONDecoder().decode([Word].self, from: data)
+			let results = try JSONDecoder().decode([Word.DTO].self, from: data)
+			words = results.map(Word.init(dto:))
 			print("\n💻 - DataManager - load() - Successful\n")
 		} catch {
 			words = []
@@ -39,7 +40,8 @@ final class DataManager: DataManaging {
 
 	private func save() {
 		do {
-			let data = try JSONEncoder().encode(words)
+			let dtos = words.map(Word.DTO.init(model:))
+			let data = try JSONEncoder().encode(dtos)
 			try data.write(to: wordsSavePath, options: [.atomic, .completeFileProtection])
 			print("\n💻 - DataManager - save() - Successful at path: \(wordsSavePath)\n")
 		} catch {
@@ -53,7 +55,7 @@ final class DataManager: DataManaging {
 
 	// MARK: Word - Add, Remove and Search operations
 	func add(word: Word) {
-		guard !words.contains(word) else { return }
+		guard !words.contains(where: { $0 == word }) else { return }
 		words.append(word)
         save()
         addAudio(for: word.phonetics)

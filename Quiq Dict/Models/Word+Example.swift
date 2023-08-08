@@ -8,7 +8,11 @@
 import Foundation
 
 extension Word {
-	static let example = Word(
+	static let example = Word(dto: Word.DTO.example)
+}
+
+extension Word.DTO {
+	static let example = Word.DTO(
 		word: "hello",
 		phonetic: nil,
 		phonetics: [

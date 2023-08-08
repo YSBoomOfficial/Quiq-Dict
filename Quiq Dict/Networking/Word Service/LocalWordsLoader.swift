@@ -23,7 +23,8 @@ final class LocalWordsLoader: WordsLoader {
 
 		print("\n💻 - LocalWordsLoader - fetchDefinitions - \(word)\n")
         let words = dataManager.search(for: word)
-        if words.isEmpty {
+
+		if words.isEmpty {
 			print("\n💻 - LocalWordsLoader - fetchDefinitions - No Data, return all words\n")
 			completion(.success(dataManager.words))
         } else {

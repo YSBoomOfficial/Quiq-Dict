@@ -40,8 +40,9 @@ final class RemoteWordsLoader: WordsLoader {
             }
 
             do {
-                let decoded = try JSONDecoder().decode([Word].self, from: data)
-                completion(.success(decoded))
+				let decodedDTO = try JSONDecoder().decode([Word.DTO].self, from: data)
+				let wordModels = decodedDTO.map(Word.init(dto:))
+				completion(.success(wordModels))
                 return
             } catch {
                 completion(.failure(.decodingError))

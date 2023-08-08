@@ -14,7 +14,7 @@
 		D3226B272898B0F100DA964A /* WordListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B262898B0F100DA964A /* WordListViewController.swift */; };
 		D3226B2C2898B0F300DA964A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3226B2B2898B0F300DA964A /* Assets.xcassets */; };
 		D3226B2F2898B0F300DA964A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3226B2D2898B0F300DA964A /* LaunchScreen.storyboard */; };
-		D3226B372898B16D00DA964A /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B362898B16D00DA964A /* Word.swift */; };
+		D3226B372898B16D00DA964A /* Word+DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B362898B16D00DA964A /* Word+DTO.swift */; };
 		D3226B3D2898B44600DA964A /* UIViewController+ShowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */; };
 		D3226B3F2898B73600DA964A /* WordsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3226B3E2898B73600DA964A /* WordsLoader.swift */; };
 		D32CCA632909AE97000292FB /* WordListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32CCA622909AE97000292FB /* WordListDataSource.swift */; };
@@ -44,6 +44,7 @@
 		D3F1F58E28B9432700EA5330 /* UIApplication+openLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */; };
 		D3F288E9291207C900904E3A /* hello.json in Resources */ = {isa = PBXBuildFile; fileRef = D38081432912012D0078C1F7 /* hello.json */; };
 		D3F8BC5328ECE86D00F74256 /* DataManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F8BC5228ECE86D00F74256 /* DataManaging.swift */; };
+		D3FF30B32A823FB2006BBA25 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FF30B22A823FB2006BBA25 /* Word.swift */; };
 		D3FFD474294806720062B312 /* WordListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFD473294806720062B312 /* WordListDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,7 +76,7 @@
 		D3226B2B2898B0F300DA964A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3226B2E2898B0F300DA964A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3226B302898B0F300DA964A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D3226B362898B16D00DA964A /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		D3226B362898B16D00DA964A /* Word+DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Word+DTO.swift"; sourceTree = "<group>"; };
 		D3226B3C2898B44600DA964A /* UIViewController+ShowError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ShowError.swift"; sourceTree = "<group>"; };
 		D3226B3E2898B73600DA964A /* WordsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsLoader.swift; sourceTree = "<group>"; };
 		D32CCA622909AE97000292FB /* WordListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListDataSource.swift; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 		D3F1F58B28B93B3A00EA5330 /* WordDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailCell.swift; sourceTree = "<group>"; };
 		D3F1F58D28B9432700EA5330 /* UIApplication+openLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+openLink.swift"; sourceTree = "<group>"; };
 		D3F8BC5228ECE86D00F74256 /* DataManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManaging.swift; sourceTree = "<group>"; };
+		D3FF30B22A823FB2006BBA25 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		D3FFD473294806720062B312 /* WordListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,7 +197,8 @@
 		D3226B382898B18400DA964A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D3226B362898B16D00DA964A /* Word.swift */,
+				D3226B362898B16D00DA964A /* Word+DTO.swift */,
+				D3FF30B22A823FB2006BBA25 /* Word.swift */,
 				D3401CB428FB62590044DB49 /* Word+Example.swift */,
 			);
 			path = Models;
@@ -469,9 +472,10 @@
 				D3C3032A2949714B003AAC4F /* UITableView+reloadWithAnimation.swift in Sources */,
 				D3226B3F2898B73600DA964A /* WordsLoader.swift in Sources */,
 				D3226B272898B0F100DA964A /* WordListViewController.swift in Sources */,
-				D3226B372898B16D00DA964A /* Word.swift in Sources */,
+				D3226B372898B16D00DA964A /* Word+DTO.swift in Sources */,
 				D3226B232898B0F100DA964A /* AppDelegate.swift in Sources */,
 				D35F8CDF28EB64DD007841FC /* RemoteWordsLoader.swift in Sources */,
+				D3FF30B32A823FB2006BBA25 /* Word.swift in Sources */,
 				D32CCA632909AE97000292FB /* WordListDataSource.swift in Sources */,
 				D3F1F58C28B93B3A00EA5330 /* WordDetailCell.swift in Sources */,
 				D3D5FE05293694EB00F1EB01 /* AttributionView.swift in Sources */,

@@ -28,7 +28,7 @@ final class WordsLoaderTest: XCTestCase {
 	}
 
 	func test_fetchDefinitions_returnsData() {
-		let data = try! JSONEncoder().encode(Word.example)
+		let data = try! JSONEncoder().encode(Word.DTO.example)
 
 		MockURLProtocol.loadingHandler = {
 			let response = HTTPURLResponse(
